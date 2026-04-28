@@ -3,33 +3,64 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<meta name="theme-color" content="#0a4d5e" />
+<meta name="theme-color" content="#b84a32" />
 <meta name="description" content="2026년 5월 1~3일 동해·삼척 가족여행 일정" />
 <title>동해·삼척 가족여행 · 2026.05.01–03</title>
+
+<!-- favicon -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="alternate icon" href="assets/favicon.ico" />
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="동해·삼척 가족여행 · 2026.05" />
+<meta property="og:description" content="라라논골키즈펜션 → 쏠비치 삼척, 2박 3일 일정." />
+<meta property="og:image" content="https://lsy860224.github.io/travel-log/assets/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://lsy860224.github.io/travel-log/" />
+<meta name="twitter:card" content="summary_large_image" />
 
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 
 <style>
   :root {
-    --ink: #18242b;
-    --ink-soft: #4a5b65;
-    --ink-mute: #8597a0;
-    --ocean-deep: #0a4d5e;
-    --ocean: #1a7a8e;
-    --ocean-soft: #cfe5ea;
-    --sand: #faf3e3;
-    --sand-deep: #f1e6cc;
-    --paper: #fcf8ee;
-    --coral: #e87a5d;
-    --coral-soft: #fde4dc;
-    --line: #e6dcc4;
-    --shadow-sm: 0 1px 0 rgba(24, 36, 43, .06);
-    --shadow-md: 0 8px 24px -12px rgba(10, 77, 94, .25);
+    /* 잉크 — 본문/헤딩 */
+    --ink: #2b2018;
+    --ink-soft: #5d4f43;
+    --ink-mute: #9a8d7e;
+
+    /* 종이 — 배경 */
+    --paper: #f7efe0;
+    --paper-deep: #ede1c8;
+    --sand: #ede1c8;
+    --sand-deep: #e0d2b3;
+    --line: #d9c9a8;
+
+    /* 스탬프 레드 — 메인 브랜드 */
+    --stamp: #b84a32;
+    --stamp-soft: #f3d8cc;
+
+    /* 빛바랜 바다 — 보조 */
+    --sea-deep: #2f5a6b;
+    --sea: #4d7d8e;
+    --sea-soft: #d6e2e6;
+
+    /* 레거시 별칭 (기존 룰 호환) */
+    --ocean-deep: var(--sea-deep);
+    --ocean: var(--sea);
+    --ocean-soft: var(--sea-soft);
+    --coral: var(--stamp);
+    --coral-soft: var(--stamp-soft);
+
+    --shadow-sm: 0 1px 0 rgba(43, 32, 24, .06);
+    --shadow-md: 0 8px 24px -12px rgba(184, 74, 50, .22);
     --radius-sm: 10px;
     --radius-md: 16px;
     --radius-lg: 24px;
-    --serif: "Iowan Old Style", "Apple Garamond", Georgia, "Nanum Myeongjo", serif;
+    --serif: "Iowan Old Style", "Palatino", "Apple Garamond", "Hoefler Text", Georgia, "Nanum Myeongjo", serif;
   }
 
   * { box-sizing: border-box; }
@@ -45,14 +76,14 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* ───── 배경 텍스처 ───── */
+  /* ───── 배경 텍스처 (종이결 + 잉크 번짐) ───── */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(ellipse at 0% 0%, rgba(26, 122, 142, .08), transparent 50%),
-      radial-gradient(ellipse at 100% 100%, rgba(232, 122, 93, .06), transparent 50%);
+      radial-gradient(ellipse at 0% 0%, rgba(184, 74, 50, .07), transparent 55%),
+      radial-gradient(ellipse at 100% 100%, rgba(77, 125, 142, .06), transparent 55%);
     pointer-events: none;
     z-index: 0;
   }
@@ -63,7 +94,7 @@
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(252, 248, 238, 0.85);
+    background: rgba(247, 239, 224, 0.88);
     backdrop-filter: saturate(180%) blur(12px);
     -webkit-backdrop-filter: saturate(180%) blur(12px);
     border-bottom: 1px solid var(--line);
@@ -81,13 +112,17 @@
   .topbar-inner::-webkit-scrollbar { display: none; }
 
   .brand {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 14px;
-    color: var(--ocean-deep);
-    letter-spacing: 0.01em;
     flex-shrink: 0;
     margin-right: auto;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .brand img {
+    height: 30px;
+    width: auto;
+    display: block;
   }
   .nav-links {
     display: flex;
@@ -140,11 +175,11 @@
     line-height: 1.05;
     margin: 0 0 24px;
     letter-spacing: -0.02em;
-    color: var(--ocean-deep);
+    color: var(--ink);
   }
   .hero h1 .accent {
     font-style: italic;
-    color: var(--coral);
+    color: var(--stamp);
   }
   .hero-meta {
     display: flex;
@@ -173,14 +208,14 @@
     gap: 16px;
     margin-bottom: 28px;
     padding-bottom: 16px;
-    border-bottom: 2px solid var(--ocean-deep);
+    border-bottom: 2px solid var(--stamp);
   }
   .day-num {
     font-family: var(--serif);
     font-size: 56px;
     font-weight: 400;
     line-height: 1;
-    color: var(--ocean-deep);
+    color: var(--ink);
     letter-spacing: -0.03em;
   }
   .day-meta {
@@ -366,7 +401,7 @@
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.05em;
-    color: var(--ocean-deep);
+    color: var(--ink);
     margin: 0 0 14px;
     display: flex;
     align-items: center;
@@ -406,7 +441,7 @@
     width: 18px;
     height: 18px;
     margin: 2px 0 0;
-    border: 1.5px solid var(--ocean);
+    border: 1.5px solid var(--stamp);
     border-radius: 4px;
     background: white;
     cursor: pointer;
@@ -415,8 +450,8 @@
     transition: all .15s ease;
   }
   .check-list input[type="checkbox"]:checked {
-    background: var(--ocean-deep);
-    border-color: var(--ocean-deep);
+    background: var(--stamp);
+    border-color: var(--stamp);
   }
   .check-list input[type="checkbox"]:checked::after {
     content: "";
@@ -505,13 +540,13 @@
     transition: border-color .12s ease;
   }
   .check-add input[type="text"]:focus {
-    border-color: var(--ocean);
+    border-color: var(--stamp);
   }
   .check-add button {
     flex-shrink: 0;
     width: 38px;
     height: 38px;
-    background: var(--ocean-deep);
+    background: var(--stamp);
     border: none;
     color: white;
     font-size: 22px;
@@ -527,7 +562,7 @@
     -webkit-tap-highlight-color: transparent;
   }
   .check-add button:hover, .check-add button:active {
-    background: var(--ocean);
+    background: var(--ink);
   }
   .check-add button:disabled {
     opacity: 0.35;
@@ -556,7 +591,9 @@
 
 <header class="topbar">
   <div class="topbar-inner">
-    <div class="brand">travel·log</div>
+    <a class="brand" href="#top" aria-label="travel·log">
+      <img src="assets/logo.svg" alt="travel·log" />
+    </a>
     <nav class="nav-links">
       <a href="#day1">5/1</a>
       <a href="#day2">5/2</a>

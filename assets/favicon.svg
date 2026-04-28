@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="travel·log">
+  <title>travel·log</title>
+  <!-- stamp red square with rounded corners, slightly tilted for hand-stamped feel -->
+  <g transform="rotate(-4 16 16)">
+    <rect x="2.5" y="2.5" width="27" height="27" rx="5.5" ry="5.5"
+          fill="#b84a32"/>
+    <rect x="5" y="5" width="22" height="22" rx="3.5" ry="3.5"
+          fill="none" stroke="#fcf8ee" stroke-width="1.1" opacity="0.9"/>
+    <!-- T·L monogram -->
+    <text x="16" y="22"
+          text-anchor="middle"
+          font-family="'Iowan Old Style','Palatino','Apple Garamond','Hoefler Text',Georgia,'Times New Roman',serif"
+          font-size="15" font-weight="700"
+          fill="#fcf8ee"
+          letter-spacing="0.5">T·L</text>
+  </g>
+</svg>
