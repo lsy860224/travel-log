@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0a4d5e" />
+<meta name="description" content="2026년 5월 1~3일 동해·삼척 가족여행 일정" />
+<title>동해·삼척 가족여행 · 2026.05.01–03</title>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+
+<style>
+  :root {
+    --ink: #18242b;
+    --ink-soft: #4a5b65;
+    --ink-mute: #8597a0;
+    --ocean-deep: #0a4d5e;
+    --ocean: #1a7a8e;
+    --ocean-soft: #cfe5ea;
+    --sand: #faf3e3;
+    --sand-deep: #f1e6cc;
+    --paper: #fcf8ee;
+    --coral: #e87a5d;
+    --coral-soft: #fde4dc;
+    --line: #e6dcc4;
+    --shadow-sm: 0 1px 0 rgba(24, 36, 43, .06);
+    --shadow-md: 0 8px 24px -12px rgba(10, 77, 94, .25);
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --serif: "Iowan Old Style", "Apple Garamond", Georgia, "Nanum Myeongjo", serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+
+  body {
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ───── 배경 텍스처 ───── */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 0% 0%, rgba(26, 122, 142, .08), transparent 50%),
+      radial-gradient(ellipse at 100% 100%, rgba(232, 122, 93, .06), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  main, header, nav { position: relative; z-index: 1; }
+
+  /* ───── 상단 고정 네비 ───── */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(252, 248, 238, 0.85);
+    backdrop-filter: saturate(180%) blur(12px);
+    -webkit-backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .topbar-inner::-webkit-scrollbar { display: none; }
+
+  .brand {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ocean-deep);
+    letter-spacing: 0.01em;
+    flex-shrink: 0;
+    margin-right: auto;
+  }
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: all .15s ease;
+  }
+  .nav-links a:hover, .nav-links a:active {
+    background: var(--ocean-soft);
+    color: var(--ocean-deep);
+  }
+
+  /* ───── HERO ───── */
+  .hero {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 56px 24px 40px;
+    text-align: left;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 16px;
+  }
+  .hero-eyebrow::before {
+    content: "";
+    width: 24px;
+    height: 1px;
+    background: var(--coral);
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(40px, 9vw, 64px);
+    font-weight: 400;
+    line-height: 1.05;
+    margin: 0 0 24px;
+    letter-spacing: -0.02em;
+    color: var(--ocean-deep);
+  }
+  .hero h1 .accent {
+    font-style: italic;
+    color: var(--coral);
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .hero-meta span strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ───── 섹션 공통 ───── */
+  section {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 24px;
+  }
+
+  .day-marker {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--ocean-deep);
+  }
+  .day-num {
+    font-family: var(--serif);
+    font-size: 56px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--ocean-deep);
+    letter-spacing: -0.03em;
+  }
+  .day-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .day-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--coral);
+  }
+  .day-date {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .day-sub {
+    font-size: 13px;
+    color: var(--ink-mute);
+  }
+
+  /* ───── 타임라인 ───── */
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--ocean-soft);
+  }
+  .t-item {
+    position: relative;
+    padding: 0 0 24px 32px;
+  }
+  .t-item:last-child { padding-bottom: 0; }
+  .t-item::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 8px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--ocean);
+  }
+  .t-item.highlight::before {
+    background: var(--coral);
+    border-color: var(--coral);
+  }
+  .t-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    margin-bottom: 4px;
+  }
+  .t-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 4px;
+  }
+  .t-desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+  }
+  .t-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .t-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ocean-deep);
+    background: var(--ocean-soft);
+    padding: 5px 10px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: all .15s ease;
+  }
+  .t-link:hover, .t-link:active {
+    background: var(--ocean);
+    color: white;
+  }
+  .t-link svg { width: 11px; height: 11px; }
+
+  /* 식사 카드 그룹 */
+  .meal-group {
+    margin-top: 12px;
+    padding: 14px 16px;
+    background: var(--sand);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+  }
+  .meal-group-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin: 0 0 8px;
+  }
+  .meal-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .meal-list li {
+    font-size: 14px;
+    color: var(--ink);
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .meal-list li::before {
+    content: "·";
+    color: var(--ocean);
+    font-weight: 700;
+  }
+  .meal-list small {
+    color: var(--ink-mute);
+    font-size: 12px;
+  }
+  .meal-list a {
+    color: var(--ocean-deep);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--ocean);
+  }
+
+  /* ───── 체크리스트 ───── */
+  .checklist-section {
+    background: linear-gradient(180deg, var(--sand) 0%, var(--paper) 100%);
+    margin: 0;
+    padding-top: 48px;
+    padding-bottom: 64px;
+    max-width: none;
+    border-top: 1px solid var(--line);
+  }
+  .checklist-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .check-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 20px;
+  }
+  @media (min-width: 640px) {
+    .check-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .check-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+  }
+  .check-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--ocean-deep);
+    margin: 0 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .check-card h3::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--coral);
+  }
+  .check-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .check-list label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 4px;
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--ink);
+    border-radius: 6px;
+    transition: background .12s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .check-list label:hover { background: var(--sand-deep); }
+  .check-list input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    margin: 2px 0 0;
+    border: 1.5px solid var(--ocean);
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    flex-shrink: 0;
+    position: relative;
+    transition: all .15s ease;
+  }
+  .check-list input[type="checkbox"]:checked {
+    background: var(--ocean-deep);
+    border-color: var(--ocean-deep);
+  }
+  .check-list input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 4px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .check-list input[type="checkbox"]:checked + span {
+    color: var(--ink-mute);
+    text-decoration: line-through;
+  }
+  .check-progress {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--ink-mute);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .check-progress .reset {
+    background: none;
+    border: none;
+    color: var(--coral);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: inherit;
+  }
+  .check-progress .reset:hover { background: var(--coral-soft); }
+
+  /* ───── 푸터 ───── */
+  footer {
+    text-align: center;
+    padding: 32px 24px 48px;
+    color: var(--ink-mute);
+    font-size: 12px;
+    border-top: 1px solid var(--line);
+  }
+  footer .heart { color: var(--coral); }
+
+  /* 인쇄 친화 */
+  @media print {
+    .topbar, .check-progress { display: none; }
+    body { background: white; }
+    section { page-break-inside: avoid; padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">travel·log</div>
+    <nav class="nav-links">
+      <a href="#day1">5/1</a>
+      <a href="#day2">5/2</a>
+      <a href="#day3">5/3</a>
+      <a href="#packing">짐</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Family Trip · East Sea</div>
+    <h1>동해 그리고<br /><span class="accent">삼척의</span> 사흘</h1>
+    <div class="hero-meta">
+      <span><strong>2026.05.01 ▸ 05.03</strong></span>
+      <span>2박 3일</span>
+      <span>라라논골키즈펜션 · 쏠비치 삼척</span>
+    </div>
+  </section>
+
+  <!-- DAY 1 -->
+  <section id="day1">
+    <div class="day-marker">
+      <div class="day-num">01</div>
+      <div class="day-meta">
+        <div class="day-label">Day One · 첫째날</div>
+        <div class="day-date">5월 1일 (금)</div>
+        <div class="day-sub">동해 · 묵호 · 어달해변</div>
+      </div>
+    </div>
+
+    <ul class="timeline">
+      <li class="t-item highlight">
+        <div class="t-tag">Stay</div>
+        <h3 class="t-title">라라논골키즈펜션</h3>
+        <p class="t-desc">어달해변에서 차로 약 20분 거리. 첫날 베이스캠프.</p>
+        <div class="t-links">
+          <a class="t-link" href="https://map.naver.com/p/search/라라논골키즈펜션" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+            네이버 지도
+          </a>
+        </div>
+      </li>
+
+      <li class="t-item">
+        <div class="t-tag">Sightseeing</div>
+        <h3 class="t-title">도째비골 스카이밸리</h3>
+        <p class="t-desc">묵호 바다를 내려다보는 전망 명소. 스카이워크와 자이언트 슬라이드.</p>
+        <div class="t-links">
+          <a class="t-link" href="https://map.naver.com/p/search/도째비골스카이밸리" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+            네이버 지도
+          </a>
+        </div>
+      </li>
+
+      <li class="t-item">
+        <div class="t-tag">Sightseeing</div>
+        <h3 class="t-title">논골담길</h3>
+        <p class="t-desc">묵호항 언덕마을의 벽화길. 카페·전망 포인트가 많아 도보 산책 추천.</p>
+        <div class="t-links">
+          <a class="t-link" href="https://map.naver.com/p/search/논골담길" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+            네이버 지도
+          </a>
+        </div>
+      </li>
+
+      <li class="t-item">
+        <div class="t-tag">Meals</div>
+        <div class="meal-group">
+          <p class="meal-group-title">오늘의 식사 & 간식</p>
+          <ul class="meal-list">
+            <li><a href="https://map.naver.com/p/search/거동탕수육" target="_blank" rel="noopener">거동탕수육</a> <small>– 묵호 노포 탕수육</small></li>
+            <li><a href="https://map.naver.com/p/search/사라수산" target="_blank" rel="noopener">사라수산</a> <small>– 회 포장</small></li>
+            <li><a href="https://map.naver.com/p/search/가마솥옛강정" target="_blank" rel="noopener">가마솥 옛강정</a> <small>– 디저트·간식</small></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- DAY 2 -->
+  <section id="day2">
+    <div class="day-marker">
+      <div class="day-num">02</div>
+      <div class="day-meta">
+        <div class="day-label">Day Two · 둘째날</div>
+        <div class="day-date">5월 2일 (토)</div>
+        <div class="day-sub">삼척 쏠비치 입성 · 워터파크 데이</div>
+      </div>
+    </div>
+
+    <ul class="timeline">
+      <li class="t-item">
+        <div class="t-tag">Move</div>
+        <h3 class="t-title">펜션 퇴실 → 삼척 이동</h3>
+        <p class="t-desc">짐 정리하고 삼척으로 이동. 워터파크 영업 시작 시간 체크 필수.</p>
+      </li>
+
+      <li class="t-item highlight">
+        <div class="t-tag">Activity</div>
+        <h3 class="t-title">쏠비치 오션플레이 워터파크</h3>
+        <p class="t-desc">메인 액티비티. 점심도 워터파크 내부에서 해결 예정.</p>
+        <div class="t-links">
+          <a class="t-link" href="https://map.naver.com/p/search/쏠비치삼척오션플레이" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+            네이버 지도
+          </a>
+        </div>
+      </li>
+
+      <li class="t-item">
+        <div class="t-tag">Lunch</div>
+        <div class="meal-group">
+          <p class="meal-group-title">점심</p>
+          <ul class="meal-list">
+            <li>오션플레이 내부 식당 <small>– 입장 시 동선·메뉴 확인</small></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="t-item highlight">
+        <div class="t-tag">Dinner</div>
+        <h3 class="t-title">쏠비치 디너</h3>
+        <p class="t-desc">리조트 내 디너. 예약 필요한 식당이면 미리 예약 확인.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- DAY 3 -->
+  <section id="day3">
+    <div class="day-marker">
+      <div class="day-num">03</div>
+      <div class="day-meta">
+        <div class="day-label">Day Three · 셋째날</div>
+        <div class="day-date">5월 3일 (일)</div>
+        <div class="day-sub">쏠비치 산책 · 삼척 맛집 투어</div>
+      </div>
+    </div>
+
+    <ul class="timeline">
+      <li class="t-item">
+        <div class="t-tag">Move</div>
+        <h3 class="t-title">쏠비치 퇴실 후 단지 산책</h3>
+        <p class="t-desc">체크아웃 후 짐을 차에 싣고, 산토리니 풍 단지 둘러보기.</p>
+      </li>
+
+      <li class="t-item">
+        <div class="t-tag">Meals</div>
+        <div class="meal-group">
+          <p class="meal-group-title">점심 & 간식</p>
+          <ul class="meal-list">
+            <li><a href="https://map.naver.com/p/search/부일막국수" target="_blank" rel="noopener">부일막국수</a> <small>– 수육 + 막국수</small></li>
+            <li><a href="https://map.naver.com/p/search/부영닭강정" target="_blank" rel="noopener">부영닭강정</a> <small>– 포장 가능</small></li>
+            <li><a href="https://map.naver.com/p/search/근덕이꽈배기" target="_blank" rel="noopener">근덕이 꽈배기</a> <small>– 차에서 먹기 좋음</small></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="t-item">
+        <div class="t-tag">Wrap</div>
+        <h3 class="t-title">귀가</h3>
+        <p class="t-desc">길어지는 오후. 출발 시간에 따라 휴게소 한 곳 들렀다 가기.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 준비물 체크리스트 -->
+  <section id="packing" class="checklist-section">
+    <div class="checklist-inner">
+      <div class="day-marker" style="border-color: var(--coral);">
+        <div class="day-num" style="color: var(--coral);">04</div>
+        <div class="day-meta">
+          <div class="day-label" style="color: var(--ocean-deep);">Packing · 준비물</div>
+          <div class="day-date">출발 전 체크</div>
+          <div class="day-sub">탭하면 저장돼요. 다시 와도 그대로 남아요.</div>
+        </div>
+      </div>
+
+      <div class="check-grid">
+        <!-- 짐 -->
+        <div class="check-card">
+          <h3>챙길 짐</h3>
+          <ul class="check-list" data-list="gear">
+            <li><label><input type="checkbox" data-key="g-swimsuit" /><span>수영복 (각자)</span></label></li>
+            <li><label><input type="checkbox" data-key="g-aquashoes" /><span>아쿠아슈즈</span></label></li>
+            <li><label><input type="checkbox" data-key="g-lifejacket" /><span>구명조끼 <em style="font-style:normal;color:var(--coral);font-weight:600;">(어른 것도!)</em></span></label></li>
+            <li><label><input type="checkbox" data-key="g-shower" /><span>샤워용품</span></label></li>
+            <li><label><input type="checkbox" data-key="g-lotion" /><span>로션</span></label></li>
+            <li><label><input type="checkbox" data-key="g-sandtoys" /><span>모래놀이 도구</span></label></li>
+            <li><label><input type="checkbox" data-key="g-clothes" /><span>아이들 여벌 옷</span></label></li>
+            <li><label><input type="checkbox" data-key="g-cup" /><span>서우 물컵</span></label></li>
+          </ul>
+          <div class="check-progress">
+            <span data-progress="gear">0 / 8</span>
+            <button class="reset" data-reset="gear">초기화</button>
+          </div>
+        </div>
+
+        <!-- 먹을거리 -->
+        <div class="check-card">
+          <h3>먹을거리</h3>
+          <ul class="check-list" data-list="food">
+            <li><label><input type="checkbox" data-key="f-baby" /><span>이유식</span></label></li>
+            <li><label><input type="checkbox" data-key="f-soup" /><span>사골국</span></label></li>
+            <li><label><input type="checkbox" data-key="f-rice" /><span>햇반</span></label></li>
+            <li><label><input type="checkbox" data-key="f-gim" /><span>김</span></label></li>
+            <li><label><input type="checkbox" data-key="f-egg" /><span>삶은 계란</span></label></li>
+          </ul>
+          <div class="check-progress">
+            <span data-progress="food">0 / 5</span>
+            <button class="reset" data-reset="food">초기화</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>made with <span class="heart">♥</span> for our family · 2026</p>
+</footer>
+
+<script>
+  (function () {
+    const STORAGE_KEY = 'travel-log:donghae-2026-05';
+
+    function loadState() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveState(state) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) { /* private mode */ }
+    }
+
+    const state = loadState();
+
+    // 체크박스 초기 상태 + 이벤트
+    document.querySelectorAll('input[type="checkbox"][data-key]').forEach(cb => {
+      const key = cb.dataset.key;
+      if (state[key]) cb.checked = true;
+      cb.addEventListener('change', () => {
+        state[key] = cb.checked;
+        saveState(state);
+        updateProgress();
+      });
+    });
+
+    // 진행률 표시
+    function updateProgress() {
+      document.querySelectorAll('[data-list]').forEach(list => {
+        const name = list.dataset.list;
+        const boxes = list.querySelectorAll('input[type="checkbox"]');
+        const checked = list.querySelectorAll('input[type="checkbox"]:checked').length;
+        const target = document.querySelector(`[data-progress="${name}"]`);
+        if (target) target.textContent = `${checked} / ${boxes.length}`;
+      });
+    }
+
+    // 리셋
+    document.querySelectorAll('[data-reset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const name = btn.dataset.reset;
+        const list = document.querySelector(`[data-list="${name}"]`);
+        list.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+          cb.checked = false;
+          delete state[cb.dataset.key];
+        });
+        saveState(state);
+        updateProgress();
+      });
+    });
+
+    updateProgress();
+  })();
+</script>
+
+</body>
+</html>
