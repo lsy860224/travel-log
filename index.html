@@ -454,6 +454,86 @@
   }
   .check-progress .reset:hover { background: var(--coral-soft); }
 
+  /* 사용자 추가 항목 */
+  .check-list li.check-item--custom {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .check-list li.check-item--custom > label {
+    flex: 1;
+    min-width: 0;
+  }
+  .check-remove {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    color: var(--ink-mute);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: inherit;
+    transition: all .12s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .check-remove:hover, .check-remove:active {
+    color: var(--coral);
+    background: var(--coral-soft);
+  }
+
+  /* 항목 추가 폼 */
+  .check-add {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+  }
+  .check-add input[type="text"] {
+    flex: 1;
+    min-width: 0;
+    padding: 9px 12px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    outline: none;
+    transition: border-color .12s ease;
+  }
+  .check-add input[type="text"]:focus {
+    border-color: var(--ocean);
+  }
+  .check-add button {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    background: var(--ocean-deep);
+    border: none;
+    color: white;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 8px;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .12s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .check-add button:hover, .check-add button:active {
+    background: var(--ocean);
+  }
+  .check-add button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
   /* ───── 푸터 ───── */
   footer {
     text-align: center;
@@ -673,6 +753,10 @@
             <li><label><input type="checkbox" data-key="g-clothes" /><span>아이들 여벌 옷</span></label></li>
             <li><label><input type="checkbox" data-key="g-cup" /><span>서우 물컵</span></label></li>
           </ul>
+          <form class="check-add" data-add="gear" autocomplete="off">
+            <input type="text" placeholder="항목 추가…" maxlength="40" enterkeyhint="done" aria-label="짐 항목 추가" />
+            <button type="submit" aria-label="추가">+</button>
+          </form>
           <div class="check-progress">
             <span data-progress="gear">0 / 8</span>
             <button class="reset" data-reset="gear">초기화</button>
@@ -689,6 +773,10 @@
             <li><label><input type="checkbox" data-key="f-gim" /><span>김</span></label></li>
             <li><label><input type="checkbox" data-key="f-egg" /><span>삶은 계란</span></label></li>
           </ul>
+          <form class="check-add" data-add="food" autocomplete="off">
+            <input type="text" placeholder="항목 추가…" maxlength="40" enterkeyhint="done" aria-label="먹을거리 항목 추가" />
+            <button type="submit" aria-label="추가">+</button>
+          </form>
           <div class="check-progress">
             <span data-progress="food">0 / 5</span>
             <button class="reset" data-reset="food">초기화</button>
@@ -707,6 +795,7 @@
 <script>
   (function () {
     const STORAGE_KEY = 'travel-log:donghae-2026-05';
+    const CUSTOM_KEY = '__custom';
 
     function loadState() {
       try {
@@ -722,15 +811,93 @@
       } catch (e) { /* private mode */ }
     }
 
+    function getCustom(state, name) {
+      const c = state[CUSTOM_KEY] || {};
+      return Array.isArray(c[name]) ? c[name] : [];
+    }
+    function setCustom(state, name, items) {
+      if (!state[CUSTOM_KEY]) state[CUSTOM_KEY] = {};
+      state[CUSTOM_KEY][name] = items;
+    }
+
     const state = loadState();
 
-    // 체크박스 초기 상태 + 이벤트
-    document.querySelectorAll('input[type="checkbox"][data-key]').forEach(cb => {
+    // 체크박스 토글 핸들러 — 기존/추가 항목 공통
+    function bindCheckbox(cb) {
       const key = cb.dataset.key;
       if (state[key]) cb.checked = true;
       cb.addEventListener('change', () => {
         state[key] = cb.checked;
         saveState(state);
+        updateProgress();
+      });
+    }
+
+    // 사용자 추가 항목 렌더
+    function renderCustomItem(listEl, name, item) {
+      const li = document.createElement('li');
+      li.className = 'check-item--custom';
+
+      const label = document.createElement('label');
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.dataset.key = item.key;
+      const span = document.createElement('span');
+      span.textContent = item.label;
+      label.appendChild(cb);
+      label.appendChild(span);
+
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'check-remove';
+      remove.setAttribute('aria-label', '삭제');
+      remove.textContent = '×';
+      remove.addEventListener('click', () => {
+        const items = getCustom(state, name).filter(it => it.key !== item.key);
+        setCustom(state, name, items);
+        delete state[item.key];
+        saveState(state);
+        li.remove();
+        updateProgress();
+      });
+
+      li.appendChild(label);
+      li.appendChild(remove);
+      listEl.appendChild(li);
+      bindCheckbox(cb);
+    }
+
+    // 기존 체크박스 바인딩
+    document.querySelectorAll('input[type="checkbox"][data-key]').forEach(bindCheckbox);
+
+    // 저장된 사용자 추가 항목 복원
+    document.querySelectorAll('[data-list]').forEach(list => {
+      const name = list.dataset.list;
+      getCustom(state, name).forEach(item => renderCustomItem(list, name, item));
+    });
+
+    // 항목 추가 폼
+    document.querySelectorAll('form[data-add]').forEach(form => {
+      const input = form.querySelector('input[type="text"]');
+      const submit = form.querySelector('button[type="submit"]');
+      const sync = () => { submit.disabled = input.value.trim().length === 0; };
+      input.addEventListener('input', sync);
+      sync();
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const value = input.value.trim();
+        if (!value) return;
+        const name = form.dataset.add;
+        const list = document.querySelector(`[data-list="${name}"]`);
+        const key = `c-${name}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
+        const item = { key, label: value };
+        const items = getCustom(state, name).concat([item]);
+        setCustom(state, name, items);
+        saveState(state);
+        renderCustomItem(list, name, item);
+        input.value = '';
+        sync();
         updateProgress();
       });
     });
@@ -746,7 +913,7 @@
       });
     }
 
-    // 리셋
+    // 리셋 — 체크 상태만 해제 (사용자 추가 항목 자체는 보존)
     document.querySelectorAll('[data-reset]').forEach(btn => {
       btn.addEventListener('click', () => {
         const name = btn.dataset.reset;
