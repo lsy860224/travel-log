@@ -17,6 +17,17 @@
 <link rel="alternate icon" href="assets/favicon.ico" />
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
 
+<!-- SEO / Open Graph -->
+<meta name="description" content="달력 기반 가족 일정·여행 플래너. 일정과 여행을 한 곳에서 관리하세요." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="travel·log" />
+<meta property="og:description" content="달력 기반 가족 일정·여행 플래너. 일정과 여행을 한 곳에서." />
+<meta property="og:url" content="https://lsy860224.github.io/travel-log/" />
+<meta property="og:image" content="https://lsy860224.github.io/travel-log/assets/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 
@@ -466,6 +477,28 @@ body {
   text-align: center; padding: 48px 20px;
   color: var(--ink-mute); font-size: 13px; line-height: 1.7;
 }
+
+/* ───── Picker (multi-event day) ───── */
+.picker-list { display: flex; flex-direction: column; gap: 8px; }
+.picker-item {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; text-align: left;
+  background: white; border: 1px solid var(--line);
+  border-radius: var(--radius-md); padding: 14px;
+  cursor: pointer; font-family: inherit;
+  -webkit-tap-highlight-color: transparent; transition: background .12s;
+}
+.picker-item:active { background: var(--sand); }
+.picker-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.picker-dot.s { background: var(--stamp); }
+.picker-dot.t { background: var(--sea); }
+.picker-text { flex: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.picker-label {
+  font-size: 15px; font-weight: 600; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.picker-sub { font-size: 12px; color: var(--ink-mute); }
+.picker-chev { width: 18px; height: 18px; color: var(--ink-mute); flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -659,7 +692,44 @@ body {
   function onDateClick(ds) {
     const evs = getEventsFor(ds);
     if(!evs.length) { openCreate(ds); }
-    else { openView(evs[0].id); }
+    else if(evs.length===1) { openView(evs[0].id); }
+    else { openPicker(ds, evs); }
+  }
+
+  /* ─── PICKER (같은 날 일정이 여러 개) ─── */
+  function openPicker(ds, evs) {
+    sheetMode='picker'; activeId=null;
+    sheetTitle.textContent=fmtDate(ds);
+    btnSheetEdit.style.display='none';
+    // 여행을 위로, 단일을 아래로
+    const items=evs.slice().sort((a,b)=>(a.type==='travel'?0:1)-(b.type==='travel'?0:1));
+    sheetBody.innerHTML=`
+      <div class="picker-list">
+        ${items.map(e=>{
+          const isT=e.type==='travel';
+          const label=isT ? (esc(e.title)||'여행 일정')
+                          : (esc((e.content||'').split('\n')[0]) || '<em style="color:var(--ink-mute)">내용 없음</em>');
+          const sub=isT ? `${fmtRange(e.startDate,e.endDate)} · ${nightsBetween(e.startDate,e.endDate)}박`
+                        : '단일 일정';
+          return `
+            <button class="picker-item" data-id="${e.id}">
+              <span class="picker-dot ${isT?'t':'s'}"></span>
+              <span class="picker-text">
+                <span class="picker-label">${label}</span>
+                <span class="picker-sub">${sub}</span>
+              </span>
+              <svg class="picker-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>`;
+        }).join('')}
+      </div>`;
+    sheetBody.querySelectorAll('.picker-item').forEach(b=>{
+      b.addEventListener('click',()=>openView(b.dataset.id));
+    });
+    sheetFoot.innerHTML='';
+    const add=btn('+ 이 날 일정 추가','btn btn-s');
+    add.onclick=()=>openCreate(ds);
+    sheetFoot.append(add);
+    openSheet();
   }
 
   /* ─── Sheet helpers ─── */
@@ -686,7 +756,6 @@ body {
   }
 
   function renderCreateBody() {
-    const isSingle = !document.querySelector('.type-toggle .on[data-t="range"]');
     sheetBody.innerHTML = `
       <div class="fg">
         <div class="type-toggle">
@@ -947,8 +1016,10 @@ body {
   }
 
   function delListItem(e, ev, key) {
-    const val=e.currentTarget.dataset.val;
-    DB[ev.id][key]=DB[ev.id][key].filter(v=>esc(v)!==val);
+    const val=e.currentTarget.dataset.val;          // dataset은 이미 디코딩된 원본 값
+    const arr=DB[ev.id][key]||[];
+    const i=arr.indexOf(val);                        // 원본끼리 비교 + 첫 일치 1개만 제거
+    if(i>-1) arr.splice(i,1);
     save(DB);
     e.currentTarget.closest('.list-item').remove();
   }
