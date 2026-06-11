@@ -188,7 +188,14 @@ body {
   width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0;
 }
 .cal-dot.s { background: var(--stamp); }
-.cal-dot.t { background: var(--sea); }
+.cal-more { font-size: 9px; font-weight: 700; color: var(--sea); line-height: 1; align-self: center; }
+
+/* travel extra-lane bars (배경 띠 위로 겹치는 여행) */
+.cal-xlanes { width: 100%; display: flex; flex-direction: column; gap: 2px; margin-top: 3px; }
+.lane-bar { height: 4px; background: var(--sea); }
+.lane-bar.cap-l { border-top-left-radius: 2px; border-bottom-left-radius: 2px; }
+.lane-bar.cap-r { border-top-right-radius: 2px; border-bottom-right-radius: 2px; }
+.lane-gap { height: 4px; }
 
 /* FAB */
 .fab {
@@ -628,6 +635,8 @@ body {
 
     const grid = document.getElementById('cal-grid');
     grid.innerHTML = '';
+    const travelLanes = assignTravelLanes();
+    const LANES_MAX = 3;            // lane 0 = 배경 띠, lane 1~2 = 얇은 바, 그 이상 = +N
 
     const todayStr = today();
     const firstDow = new Date(cy,cm,1).getDay();
@@ -658,8 +667,14 @@ body {
       if(isWkStart) cls.push('wk-start');
       if(isWkEnd)   cls.push('wk-end');
 
-      if(travelEvs.length) {
-        const tr = travelEvs[0];
+      // 겹치는 여행을 레인으로 분리: lane 0 = 배경 띠, lane 1+ = 얇은 바
+      const covT = travelEvs.map(e=>({ev:e, lane:travelLanes[e.id]}));
+      const lane0 = covT.find(c=>c.lane===0);
+      const extras = covT.filter(c=>c.lane>=1 && c.lane<LANES_MAX);
+      const overflowT = covT.filter(c=>c.lane>=LANES_MAX).length;
+
+      if(lane0) {
+        const tr = lane0.ev;
         const isStart = ds===tr.startDate;
         const isEnd   = ds===tr.endDate;
         if(isStart && isEnd) { cls.push('tr-start','tr-end'); }
@@ -672,11 +687,32 @@ body {
       cell.dataset.date = ds;
       cell.innerHTML = `<div class="cal-num">${day}</div>`;
 
-      if(singleEvs.length||travelEvs.length) {
+      // lane 1+ 여행: 셀 안에 얇은 바로 쌓기 (빈 레인은 투명 spacer 로 정렬 유지)
+      if(extras.length) {
+        const byLane = {}; extras.forEach(c=>byLane[c.lane]=c);
+        const maxL = Math.max(...extras.map(c=>c.lane));
+        let bars = '';
+        for(let L=1; L<=maxL; L++) {
+          const c = byLane[L];
+          if(c) {
+            const capL = ds===c.ev.startDate || isWkStart;
+            const capR = ds===c.ev.endDate   || isWkEnd;
+            bars += `<div class="lane-bar${capL?' cap-l':''}${capR?' cap-r':''}"></div>`;
+          } else {
+            bars += `<div class="lane-gap"></div>`;
+          }
+        }
+        const wrap = document.createElement('div');
+        wrap.className = 'cal-xlanes';
+        wrap.innerHTML = bars;
+        cell.appendChild(wrap);
+      }
+
+      if(singleEvs.length || overflowT) {
         const dots = document.createElement('div');
         dots.className = 'cal-dots';
-        singleEvs.slice(0,2).forEach(()=>{ dots.innerHTML+=`<div class="cal-dot s"></div>`; });
-        travelEvs.slice(0,1).forEach(()=>{ dots.innerHTML+=`<div class="cal-dot t"></div>`; });
+        singleEvs.slice(0,3).forEach(()=>{ dots.innerHTML+=`<div class="cal-dot s"></div>`; });
+        if(overflowT) dots.innerHTML += `<span class="cal-more">+${overflowT}</span>`;
         cell.appendChild(dots);
       }
 
@@ -687,6 +723,25 @@ body {
 
   function getEventsFor(ds) {
     return Object.values(DB).filter(e=> ds>=e.startDate && ds<=e.endDate);
+  }
+
+  // 여행 이벤트에 레인 번호 배정 (greedy interval partitioning).
+  // 같은 여행은 전 기간 동일 레인 → 주(week) 경계를 넘어도 바가 한 줄로 이어짐.
+  function assignTravelLanes() {
+    const travels = Object.values(DB)
+      .filter(e=>e.type==='travel')
+      .sort((a,b)=> a.startDate<b.startDate ? -1
+                  : a.startDate>b.startDate ? 1
+                  : b.endDate.localeCompare(a.endDate));   // 시작일 오름차순, 동률이면 긴 여행 먼저
+    const laneEnds = [];   // laneEnds[i] = i번 레인 마지막 여행의 종료일
+    const map = {};
+    travels.forEach(t=>{
+      let lane = 0;
+      while(lane<laneEnds.length && laneEnds[lane]>=t.startDate) lane++;  // 종료일이 시작일과 같거나 늦으면 겹침
+      map[t.id] = lane;
+      laneEnds[lane] = t.endDate;
+    });
+    return map;
   }
 
   function onDateClick(ds) {
