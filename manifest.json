@@ -1,0 +1,31 @@
+{
+  "name": "travel·log",
+  "short_name": "travel·log",
+  "description": "가족 여행 일정 플래너",
+  "start_url": "/travel-log/",
+  "scope": "/travel-log/",
+  "display": "standalone",
+  "background_color": "#f7efe0",
+  "theme_color": "#b84a32",
+  "orientation": "portrait-primary",
+  "lang": "ko",
+  "categories": ["travel", "lifestyle"],
+  "icons": [
+    {
+      "src": "assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/apple-touch-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
