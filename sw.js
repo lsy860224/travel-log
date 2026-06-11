@@ -1,4 +1,4 @@
-const CACHE = 'travel-log-v3';
+const CACHE = 'travel-log-v4';
 const ASSETS = [
   '/travel-log/',
   '/travel-log/index.html',

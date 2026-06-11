@@ -48,6 +48,7 @@
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;
+  --cal-max: 1100px;
   --safe-b: env(safe-area-inset-bottom, 0px);
   --serif: "Iowan Old Style","Palatino","Apple Garamond",Georgia,"Nanum Myeongjo",serif;
 }
@@ -83,8 +84,8 @@ body {
   z-index: 1;
 }
 .topbar-inner {
-  max-width: 480px; margin: 0 auto;
-  padding: 12px 8px;
+  max-width: var(--cal-max); margin: 0 auto;
+  padding: 12px 12px;
   display: flex; align-items: center; gap: 4px;
 }
 .topbar-title {
@@ -109,10 +110,13 @@ body {
   flex: 1; overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
+  display: flex; flex-direction: column;
 }
 .cal-wrap {
-  max-width: 480px; margin: 0 auto;
-  padding: 8px 8px calc(80px + var(--safe-b));
+  width: 100%; max-width: var(--cal-max); margin: 0 auto;
+  padding: 8px 12px calc(80px + var(--safe-b));
+  flex: 1; min-height: 0;
+  display: flex; flex-direction: column;
 }
 .cal-header {
   display: flex; align-items: center; justify-content: space-between;
@@ -129,7 +133,7 @@ body {
 }
 .cal-weekdays {
   display: grid; grid-template-columns: repeat(7, 1fr);
-  margin-bottom: 4px;
+  margin-bottom: 4px; flex-shrink: 0;
 }
 .cal-weekday {
   text-align: center;
@@ -140,15 +144,22 @@ body {
 .cal-weekday.sat { color: var(--sea); }
 
 .cal-grid {
+  flex: 1; min-height: 360px;
   display: grid; grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
+  grid-auto-rows: 1fr;                       /* 행이 남은 높이를 균등 분할 → 페이지를 채움 */
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;                          /* 둥근 외곽으로 셀 클리핑 */
 }
 .cal-cell {
   position: relative;
   min-height: 52px;
   display: flex; flex-direction: column; align-items: center;
   padding-top: 6px;
-  cursor: pointer; border-radius: var(--radius-sm);
+  border-right: 1px solid var(--line);       /* 날짜별 칸 구분선 */
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   transition: background .12s;
 }
@@ -169,16 +180,8 @@ body {
 .cal-cell.today.sun .cal-num,
 .cal-cell.today.sat .cal-num { color: white; }
 
-/* travel range band */
-.cal-cell.tr-mid   { background: rgba(77,125,142,.13); border-radius: 0; }
-.cal-cell.tr-start { background: rgba(77,125,142,.13); border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
-.cal-cell.tr-end   { background: rgba(77,125,142,.13); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
-.cal-cell.tr-start.tr-end { border-radius: var(--radius-sm); }
-/* week boundary override */
-.cal-cell.tr-mid.wk-start  { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
-.cal-cell.tr-mid.wk-end    { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
-.cal-cell.tr-start.wk-end  { border-radius: var(--radius-sm); }
-.cal-cell.tr-end.wk-start  { border-radius: var(--radius-sm); }
+/* travel range band — 날짜 칸을 채우는 옅은 sea 틴트 (연속 칸이 한 여행) */
+.cal-cell.tr-start, .cal-cell.tr-mid, .cal-cell.tr-end { background: rgba(77,125,142,.13); }
 
 .cal-dots {
   display: flex; gap: 3px; margin-top: 3px;
