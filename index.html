@@ -4,8 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#b84a32" />
-<meta name="description" content="2026년 5월 1~3일 동해·삼척 가족여행 일정" />
-<title>동해·삼척 가족여행 · 2026.05.01–03</title>
+<title>travel·log</title>
 
 <!-- PWA -->
 <link rel="manifest" href="manifest.json" />
@@ -18,968 +17,1126 @@
 <link rel="alternate icon" href="assets/favicon.ico" />
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
 
-<!-- Open Graph / Twitter -->
-<meta property="og:type" content="website" />
-<meta property="og:title" content="동해·삼척 가족여행 · 2026.05" />
-<meta property="og:description" content="라라논골키즈펜션 → 쏠비치 삼척, 2박 3일 일정." />
-<meta property="og:image" content="https://lsy860224.github.io/travel-log/assets/og-image.png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:url" content="https://lsy860224.github.io/travel-log/" />
-<meta name="twitter:card" content="summary_large_image" />
-
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 
 <style>
-  :root {
-    /* 잉크 — 본문/헤딩 */
-    --ink: #2b2018;
-    --ink-soft: #5d4f43;
-    --ink-mute: #9a8d7e;
+:root {
+  --ink: #2b2018;
+  --ink-soft: #5d4f43;
+  --ink-mute: #9a8d7e;
+  --paper: #f7efe0;
+  --sand: #ede1c8;
+  --sand-deep: #e0d2b3;
+  --line: #d9c9a8;
+  --stamp: #b84a32;
+  --stamp-soft: #f3d8cc;
+  --sea-deep: #2f5a6b;
+  --sea: #4d7d8e;
+  --sea-soft: #d6e2e6;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --serif: "Iowan Old Style","Palatino","Apple Garamond",Georgia,"Nanum Myeongjo",serif;
+}
 
-    /* 종이 — 배경 */
-    --paper: #f7efe0;
-    --paper-deep: #ede1c8;
-    --sand: #ede1c8;
-    --sand-deep: #e0d2b3;
-    --line: #d9c9a8;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
 
-    /* 스탬프 레드 — 메인 브랜드 */
-    --stamp: #b84a32;
-    --stamp-soft: #f3d8cc;
+/* ───── Views ───── */
+.view {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  background: var(--paper);
+  transform: translateX(100%);
+  transition: transform .28s cubic-bezier(.4,0,.2,1);
+  will-change: transform;
+}
+.view.active { transform: translateX(0); }
+.view.behind  { transform: translateX(-28%); }
 
-    /* 빛바랜 바다 — 보조 */
-    --sea-deep: #2f5a6b;
-    --sea: #4d7d8e;
-    --sea-soft: #d6e2e6;
+/* ───── Topbar ───── */
+.topbar {
+  flex-shrink: 0;
+  background: rgba(247,239,224,.92);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--line);
+  z-index: 1;
+}
+.topbar-inner {
+  max-width: 480px; margin: 0 auto;
+  padding: 12px 8px;
+  display: flex; align-items: center; gap: 4px;
+}
+.topbar-title {
+  flex: 1; text-align: center;
+  font-size: 16px; font-weight: 700; color: var(--ink);
+}
+.brand { flex-shrink: 0; display: flex; align-items: center; text-decoration: none; }
+.brand img { height: 24px; }
+.icon-btn {
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  background: none; border: none; cursor: pointer;
+  border-radius: 50%; color: var(--ink);
+  -webkit-tap-highlight-color: transparent;
+  transition: background .12s; flex-shrink: 0;
+}
+.icon-btn:active { background: var(--sand); }
+.icon-btn svg { width: 20px; height: 20px; pointer-events: none; }
 
-    /* 레거시 별칭 (기존 룰 호환) */
-    --ocean-deep: var(--sea-deep);
-    --ocean: var(--sea);
-    --ocean-soft: var(--sea-soft);
-    --coral: var(--stamp);
-    --coral-soft: var(--stamp-soft);
+/* ───── Calendar ───── */
+.cal-scroll {
+  flex: 1; overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+.cal-wrap {
+  max-width: 480px; margin: 0 auto;
+  padding: 8px 8px calc(80px + var(--safe-b));
+}
+.cal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 4px 12px;
+}
+.cal-month-text {
+  font-family: var(--serif);
+  font-size: 22px; font-weight: 400; color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.cal-month-text small {
+  font-family: "Pretendard Variable", sans-serif;
+  font-size: 13px; font-weight: 600; color: var(--ink-mute); margin-right: 4px;
+}
+.cal-weekdays {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 4px;
+}
+.cal-weekday {
+  text-align: center;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+  color: var(--ink-mute); padding: 4px 0;
+}
+.cal-weekday.sun { color: #b84a32; }
+.cal-weekday.sat { color: var(--sea); }
 
-    --shadow-sm: 0 1px 0 rgba(43, 32, 24, .06);
-    --shadow-md: 0 8px 24px -12px rgba(184, 74, 50, .22);
-    --radius-sm: 10px;
-    --radius-md: 16px;
-    --radius-lg: 24px;
-    --serif: "Iowan Old Style", "Palatino", "Apple Garamond", "Hoefler Text", Georgia, "Nanum Myeongjo", serif;
-  }
+.cal-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+}
+.cal-cell {
+  position: relative;
+  min-height: 52px;
+  display: flex; flex-direction: column; align-items: center;
+  padding-top: 6px;
+  cursor: pointer; border-radius: var(--radius-sm);
+  -webkit-tap-highlight-color: transparent;
+  transition: background .12s;
+}
+.cal-cell.empty { pointer-events: none; }
+.cal-cell:not(.empty):active { background: var(--sand) !important; }
 
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+.cal-num {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 500; border-radius: 50%;
+  color: var(--ink); line-height: 1;
+}
+.cal-cell.sun .cal-num  { color: #b84a32; }
+.cal-cell.sat .cal-num  { color: var(--sea); }
+.cal-cell.today .cal-num {
+  background: var(--stamp); color: white; font-weight: 700;
+}
+.cal-cell.today.sun .cal-num,
+.cal-cell.today.sat .cal-num { color: white; }
 
-  body {
-    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    color: var(--ink);
-    background: var(--paper);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
+/* travel range band */
+.cal-cell.tr-mid   { background: rgba(77,125,142,.13); border-radius: 0; }
+.cal-cell.tr-start { background: rgba(77,125,142,.13); border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+.cal-cell.tr-end   { background: rgba(77,125,142,.13); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+.cal-cell.tr-start.tr-end { border-radius: var(--radius-sm); }
+/* week boundary override */
+.cal-cell.tr-mid.wk-start  { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+.cal-cell.tr-mid.wk-end    { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+.cal-cell.tr-start.wk-end  { border-radius: var(--radius-sm); }
+.cal-cell.tr-end.wk-start  { border-radius: var(--radius-sm); }
 
-  /* ───── 배경 텍스처 (종이결 + 잉크 번짐) ───── */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at 0% 0%, rgba(184, 74, 50, .07), transparent 55%),
-      radial-gradient(ellipse at 100% 100%, rgba(77, 125, 142, .06), transparent 55%);
-    pointer-events: none;
-    z-index: 0;
-  }
-  main, header, nav { position: relative; z-index: 1; }
+.cal-dots {
+  display: flex; gap: 3px; margin-top: 3px;
+  justify-content: center; flex-wrap: wrap; padding: 0 2px;
+}
+.cal-dot {
+  width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0;
+}
+.cal-dot.s { background: var(--stamp); }
+.cal-dot.t { background: var(--sea); }
 
-  /* ───── 상단 고정 네비 ───── */
-  .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: rgba(247, 239, 224, 0.88);
-    backdrop-filter: saturate(180%) blur(12px);
-    -webkit-backdrop-filter: saturate(180%) blur(12px);
-    border-bottom: 1px solid var(--line);
-  }
-  .topbar-inner {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .topbar-inner::-webkit-scrollbar { display: none; }
+/* FAB */
+.fab {
+  position: fixed;
+  bottom: calc(24px + var(--safe-b)); right: 24px;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--stamp); color: white; border: none;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(184,74,50,.4);
+  z-index: 20; -webkit-tap-highlight-color: transparent;
+  transition: transform .15s;
+}
+.fab:active { transform: scale(.93); }
+.fab svg { width: 26px; height: 26px; }
 
-  .brand {
-    flex-shrink: 0;
-    margin-right: auto;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .brand img {
-    height: 30px;
-    width: auto;
-    display: block;
-  }
-  .nav-links {
-    display: flex;
-    gap: 4px;
-    flex-shrink: 0;
-  }
-  .nav-links a {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--ink-soft);
-    text-decoration: none;
-    padding: 6px 12px;
-    border-radius: 999px;
-    white-space: nowrap;
-    transition: all .15s ease;
-  }
-  .nav-links a:hover, .nav-links a:active {
-    background: var(--ocean-soft);
-    color: var(--ocean-deep);
-  }
+/* ───── Overlay ───── */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(43,32,24,.42);
+  z-index: 30; opacity: 0; pointer-events: none;
+  transition: opacity .25s;
+}
+.overlay.on { opacity: 1; pointer-events: auto; }
 
-  /* ───── HERO ───── */
-  .hero {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 56px 24px 40px;
-    text-align: left;
-  }
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--coral);
-    margin-bottom: 16px;
-  }
-  .hero-eyebrow::before {
-    content: "";
-    width: 24px;
-    height: 1px;
-    background: var(--coral);
-  }
-  .hero h1 {
-    font-family: var(--serif);
-    font-size: clamp(40px, 9vw, 64px);
-    font-weight: 400;
-    line-height: 1.05;
-    margin: 0 0 24px;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-  }
-  .hero h1 .accent {
-    font-style: italic;
-    color: var(--stamp);
-  }
-  .hero-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 20px;
-    font-size: 14px;
-    color: var(--ink-soft);
-    padding-top: 20px;
-    border-top: 1px solid var(--line);
-  }
-  .hero-meta span strong {
-    color: var(--ink);
-    font-weight: 600;
-  }
+/* ───── Sheet ───── */
+.sheet {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  max-width: 480px; margin: 0 auto;
+  background: var(--paper);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  z-index: 40; max-height: 92vh;
+  display: flex; flex-direction: column;
+  transform: translateY(100%);
+  transition: transform .3s cubic-bezier(.4,0,.2,1);
+  padding-bottom: var(--safe-b);
+}
+.sheet.open { transform: translateY(0); }
 
-  /* ───── 섹션 공통 ───── */
-  section {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 48px 24px;
-  }
+.sheet-handle {
+  width: 40px; height: 4px;
+  background: var(--line); border-radius: 2px;
+  margin: 12px auto 0; flex-shrink: 0;
+}
+.sheet-head {
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.sheet-title { font-size: 16px; font-weight: 700; color: var(--ink); }
+.sheet-head-right { display: flex; align-items: center; gap: 4px; }
 
-  .day-marker {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    margin-bottom: 28px;
-    padding-bottom: 16px;
-    border-bottom: 2px solid var(--stamp);
-  }
-  .day-num {
-    font-family: var(--serif);
-    font-size: 56px;
-    font-weight: 400;
-    line-height: 1;
-    color: var(--ink);
-    letter-spacing: -0.03em;
-  }
-  .day-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  .day-label {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--coral);
-  }
-  .day-date {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--ink);
-  }
-  .day-sub {
-    font-size: 13px;
-    color: var(--ink-mute);
-  }
+.sheet-body {
+  flex: 1; overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 18px 18px 4px;
+}
+.sheet-foot {
+  flex-shrink: 0; padding: 10px 18px;
+  border-top: 1px solid var(--line);
+  display: flex; gap: 8px;
+}
 
-  /* ───── 타임라인 ───── */
-  .timeline {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    position: relative;
-  }
-  .timeline::before {
-    content: "";
-    position: absolute;
-    left: 7px;
-    top: 8px;
-    bottom: 8px;
-    width: 1px;
-    background: var(--ocean-soft);
-  }
-  .t-item {
-    position: relative;
-    padding: 0 0 24px 32px;
-  }
-  .t-item:last-child { padding-bottom: 0; }
-  .t-item::before {
-    content: "";
-    position: absolute;
-    left: 3px;
-    top: 8px;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--paper);
-    border: 2px solid var(--ocean);
-  }
-  .t-item.highlight::before {
-    background: var(--coral);
-    border-color: var(--coral);
-  }
-  .t-tag {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ocean);
-    margin-bottom: 4px;
-  }
-  .t-title {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--ink);
-    margin: 0 0 4px;
-  }
-  .t-desc {
-    font-size: 14px;
-    color: var(--ink-soft);
-    margin: 0 0 8px;
-  }
-  .t-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 8px;
-  }
-  .t-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--ocean-deep);
-    background: var(--ocean-soft);
-    padding: 5px 10px;
-    border-radius: 999px;
-    text-decoration: none;
-    transition: all .15s ease;
-  }
-  .t-link:hover, .t-link:active {
-    background: var(--ocean);
-    color: white;
-  }
-  .t-link svg { width: 11px; height: 11px; }
+/* ───── Forms ───── */
+.fg { margin-bottom: 18px; }
+.fl {
+  display: block; font-size: 11px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink-mute); margin-bottom: 6px;
+}
+.fi, .fta {
+  width: 100%; padding: 11px 13px;
+  font-size: 15px; font-family: inherit; color: var(--ink);
+  background: white; border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm); outline: none;
+  -webkit-appearance: none; transition: border-color .15s;
+}
+.fi:focus, .fta:focus { border-color: var(--stamp); }
+.fta { resize: none; min-height: 110px; line-height: 1.65; }
 
-  /* 식사 카드 그룹 */
-  .meal-group {
-    margin-top: 12px;
-    padding: 14px 16px;
-    background: var(--sand);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--line);
-  }
-  .meal-group-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--coral);
-    margin: 0 0 8px;
-  }
-  .meal-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .meal-list li {
-    font-size: 14px;
-    color: var(--ink);
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-  }
-  .meal-list li::before {
-    content: "·";
-    color: var(--ocean);
-    font-weight: 700;
-  }
-  .meal-list small {
-    color: var(--ink-mute);
-    font-size: 12px;
-  }
-  .meal-list a {
-    color: var(--ocean-deep);
-    text-decoration: none;
-    border-bottom: 1px dotted var(--ocean);
-  }
+.type-toggle {
+  display: flex; background: var(--sand);
+  border-radius: var(--radius-sm); padding: 3px; gap: 0; margin-bottom: 14px;
+}
+.type-toggle button {
+  flex: 1; padding: 8px; font-size: 13px; font-weight: 600;
+  font-family: inherit; color: var(--ink-soft);
+  background: none; border: none; border-radius: 8px;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: all .15s;
+}
+.type-toggle button.on {
+  background: white; color: var(--stamp);
+  box-shadow: 0 1px 3px rgba(43,32,24,.1);
+}
 
-  /* ───── 체크리스트 ───── */
-  .checklist-section {
-    background: linear-gradient(180deg, var(--sand) 0%, var(--paper) 100%);
-    margin: 0;
-    padding-top: 48px;
-    padding-bottom: 64px;
-    max-width: none;
-    border-top: 1px solid var(--line);
-  }
-  .checklist-inner {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-  .check-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin-top: 20px;
-  }
-  @media (min-width: 640px) {
-    .check-grid { grid-template-columns: 1fr 1fr; }
-  }
-  .check-card {
-    background: white;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-md);
-    padding: 20px;
-    box-shadow: var(--shadow-sm);
-  }
-  .check-card h3 {
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    color: var(--ink);
-    margin: 0 0 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .check-card h3::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--coral);
-  }
-  .check-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  .check-list label {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 8px 4px;
-    cursor: pointer;
-    font-size: 15px;
-    color: var(--ink);
-    border-radius: 6px;
-    transition: background .12s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .check-list label:hover { background: var(--sand-deep); }
-  .check-list input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
-    margin: 2px 0 0;
-    border: 1.5px solid var(--stamp);
-    border-radius: 4px;
-    background: white;
-    cursor: pointer;
-    flex-shrink: 0;
-    position: relative;
-    transition: all .15s ease;
-  }
-  .check-list input[type="checkbox"]:checked {
-    background: var(--stamp);
-    border-color: var(--stamp);
-  }
-  .check-list input[type="checkbox"]:checked::after {
-    content: "";
-    position: absolute;
-    left: 5px;
-    top: 1px;
-    width: 4px;
-    height: 9px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-  }
-  .check-list input[type="checkbox"]:checked + span {
-    color: var(--ink-mute);
-    text-decoration: line-through;
-  }
-  .check-progress {
-    margin-top: 14px;
-    font-size: 12px;
-    color: var(--ink-mute);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .check-progress .reset {
-    background: none;
-    border: none;
-    color: var(--coral);
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-family: inherit;
-  }
-  .check-progress .reset:hover { background: var(--coral-soft); }
+.date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.date-row.single { grid-template-columns: 1fr; }
 
-  /* 사용자 추가 항목 */
-  .check-list li.check-item--custom {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .check-list li.check-item--custom > label {
-    flex: 1;
-    min-width: 0;
-  }
-  .check-remove {
-    flex-shrink: 0;
-    background: none;
-    border: none;
-    color: var(--ink-mute);
-    font-size: 20px;
-    line-height: 1;
-    cursor: pointer;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-family: inherit;
-    transition: all .12s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .check-remove:hover, .check-remove:active {
-    color: var(--coral);
-    background: var(--coral-soft);
-  }
+/* ───── Buttons ───── */
+.btn {
+  flex: 1; padding: 13px 8px;
+  font-size: 14px; font-weight: 700; font-family: inherit;
+  border: none; border-radius: var(--radius-sm);
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: opacity .15s;
+}
+.btn:active { opacity: .78; }
+.btn-p { background: var(--stamp); color: white; }
+.btn-s { background: var(--sand); color: var(--ink-soft); }
+.btn-t { background: var(--sea-soft); color: var(--sea-deep); }
+.btn-d { background: #fee2e2; color: #dc2626; flex: 0 0 auto; padding: 13px 16px; }
 
-  /* 항목 추가 폼 */
-  .check-add {
-    display: flex;
-    gap: 8px;
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px dashed var(--line);
-  }
-  .check-add input[type="text"] {
-    flex: 1;
-    min-width: 0;
-    padding: 9px 12px;
-    font-size: 15px;
-    font-family: inherit;
-    color: var(--ink);
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    outline: none;
-    transition: border-color .12s ease;
-  }
-  .check-add input[type="text"]:focus {
-    border-color: var(--stamp);
-  }
-  .check-add button {
-    flex-shrink: 0;
-    width: 38px;
-    height: 38px;
-    background: var(--stamp);
-    border: none;
-    color: white;
-    font-size: 22px;
-    font-weight: 300;
-    line-height: 1;
-    cursor: pointer;
-    border-radius: 8px;
-    font-family: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background .12s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .check-add button:hover, .check-add button:active {
-    background: var(--ink);
-  }
-  .check-add button:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-  }
+/* ───── List items (destinations, meals, accommodation) ───── */
+.list-items { display: flex; flex-direction: column; gap: 6px; }
+.list-item {
+  display: flex; align-items: center; gap: 10px;
+  background: white; border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 11px 13px;
+}
+.list-item-text { flex: 1; font-size: 15px; color: var(--ink); line-height: 1.4; }
+.list-item-del {
+  flex-shrink: 0; width: 28px; height: 28px;
+  border: none; background: none; color: var(--ink-mute);
+  font-size: 17px; cursor: pointer; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent; transition: all .12s;
+}
+.list-item-del:active { color: var(--stamp); background: var(--stamp-soft); }
 
-  /* ───── 푸터 ───── */
-  footer {
-    text-align: center;
-    padding: 32px 24px 48px;
-    color: var(--ink-mute);
-    font-size: 12px;
-    border-top: 1px solid var(--line);
-  }
-  footer .heart { color: var(--coral); }
+.add-row { display: flex; gap: 7px; margin-top: 7px; }
+.add-input {
+  flex: 1; padding: 10px 12px;
+  font-size: 14px; font-family: inherit; color: var(--ink);
+  background: white; border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm); outline: none;
+  -webkit-appearance: none; transition: border-color .15s;
+}
+.add-input:focus { border-color: var(--stamp); }
+.add-btn {
+  width: 40px; height: 40px; flex-shrink: 0;
+  background: var(--stamp); color: white; border: none;
+  border-radius: var(--radius-sm); font-size: 22px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent; transition: opacity .12s;
+}
+.add-btn:disabled { opacity: .35; cursor: default; }
 
-  /* 인쇄 친화 */
-  @media print {
-    .topbar, .check-progress { display: none; }
-    body { background: white; }
-    section { page-break-inside: avoid; padding: 24px; }
-  }
+/* ───── Checklist ───── */
+.check-items { display: flex; flex-direction: column; }
+.check-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 4px; border-radius: 8px;
+  -webkit-tap-highlight-color: transparent; transition: background .12s;
+}
+.check-item:active { background: var(--sand); }
+.check-item input[type="checkbox"] {
+  appearance: none; -webkit-appearance: none;
+  width: 20px; height: 20px; flex-shrink: 0;
+  border: 1.5px solid var(--stamp); border-radius: 5px;
+  background: white; cursor: pointer; position: relative;
+  transition: all .15s; margin: 0;
+}
+.check-item input:checked { background: var(--stamp); border-color: var(--stamp); }
+.check-item input:checked::after {
+  content: ""; position: absolute;
+  left: 5px; top: 1px; width: 5px; height: 10px;
+  border: solid white; border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.check-item-label { flex: 1; font-size: 15px; color: var(--ink); cursor: pointer; }
+.check-item input:checked + .check-item-label { color: var(--ink-mute); text-decoration: line-through; }
+.check-item-del {
+  flex-shrink: 0; width: 28px; height: 28px;
+  border: none; background: none; color: var(--ink-mute); font-size: 17px;
+  cursor: pointer; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent; transition: all .12s;
+}
+.check-item-del:active { color: var(--stamp); background: var(--stamp-soft); }
+
+/* ───── View mode display ───── */
+.view-date-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 700;
+  padding: 6px 14px; border-radius: 999px; margin-bottom: 16px;
+}
+.view-date-badge.single { background: var(--stamp-soft); color: var(--stamp); }
+.view-date-badge.travel { background: var(--sea-soft); color: var(--sea-deep); }
+
+.view-content {
+  font-size: 15px; color: var(--ink); line-height: 1.75;
+  white-space: pre-wrap; background: white;
+  border: 1px solid var(--line); border-radius: var(--radius-md);
+  padding: 16px;
+}
+.view-section { margin-bottom: 20px; }
+.view-section-title {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--stamp); margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.view-section-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.view-list { display: flex; flex-direction: column; gap: 5px; }
+.view-list-item {
+  font-size: 14px; color: var(--ink); padding: 10px 14px;
+  background: white; border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+.view-empty { font-size: 13px; color: var(--ink-mute); font-style: italic; padding: 4px 2px; }
+
+/* ───── Detail page ───── */
+.detail-scroll {
+  flex: 1; overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.detail-wrap {
+  max-width: 480px; margin: 0 auto;
+  padding: 24px 20px calc(60px + var(--safe-b));
+}
+.detail-hero {
+  padding-bottom: 20px; margin-bottom: 24px;
+  border-bottom: 2px solid var(--stamp);
+}
+.detail-hero-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--stamp); margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.detail-hero-eyebrow::before { content: ""; width: 20px; height: 1px; background: var(--stamp); }
+.detail-hero h2 {
+  font-family: var(--serif); font-size: clamp(28px,7vw,42px);
+  font-weight: 400; line-height: 1.1; letter-spacing: -.02em; color: var(--ink);
+  margin-bottom: 12px;
+}
+.detail-hero-meta {
+  font-size: 13px; color: var(--ink-soft);
+  display: flex; flex-wrap: wrap; gap: 6px 16px;
+}
+.detail-section { margin-bottom: 28px; }
+.detail-section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--sea-deep); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.detail-section-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.detail-items { display: flex; flex-direction: column; gap: 6px; }
+.detail-item {
+  font-size: 15px; color: var(--ink); padding: 12px 16px;
+  background: white; border: 1px solid var(--line); border-radius: var(--radius-sm);
+  line-height: 1.5;
+}
+.detail-item::before { content: "·"; color: var(--sea); font-weight: 700; margin-right: 8px; }
+
+.detail-check-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px; background: white;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  margin-bottom: 6px;
+}
+.detail-check-item input[type="checkbox"] {
+  appearance: none; -webkit-appearance: none;
+  width: 20px; height: 20px; flex-shrink: 0;
+  border: 1.5px solid var(--stamp); border-radius: 5px;
+  background: white; cursor: pointer; position: relative;
+  transition: all .15s; margin: 0;
+}
+.detail-check-item input:checked { background: var(--stamp); border-color: var(--stamp); }
+.detail-check-item input:checked::after {
+  content: ""; position: absolute; left: 5px; top: 1px;
+  width: 5px; height: 10px; border: solid white;
+  border-width: 0 2px 2px 0; transform: rotate(45deg);
+}
+.detail-check-label { flex: 1; font-size: 15px; color: var(--ink); cursor: pointer; }
+.detail-check-item input:checked + .detail-check-label { color: var(--ink-mute); text-decoration: line-through; }
+
+.detail-single-content {
+  font-size: 15px; color: var(--ink); line-height: 1.75;
+  white-space: pre-wrap; background: white;
+  border: 1px solid var(--line); border-radius: var(--radius-md); padding: 18px;
+}
+
+/* empty state */
+.empty-cal {
+  text-align: center; padding: 48px 20px;
+  color: var(--ink-mute); font-size: 13px; line-height: 1.7;
+}
 </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="topbar-inner">
-    <a class="brand" href="#top" aria-label="travel·log">
-      <img src="assets/logo.svg" alt="travel·log" />
-    </a>
-    <nav class="nav-links">
-      <a href="#day1">5/1</a>
-      <a href="#day2">5/2</a>
-      <a href="#day3">5/3</a>
-      <a href="#packing">짐</a>
-    </nav>
+<!-- ══ VIEW: Calendar ══ -->
+<div id="v-cal" class="view active">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#" onclick="return false"><img src="assets/logo.svg" alt="travel·log" /></a>
+      <span style="flex:1"></span>
+      <button class="icon-btn" id="btn-prev" aria-label="이전 달">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span id="cal-month-text" class="cal-month-text"></span>
+      <button class="icon-btn" id="btn-next" aria-label="다음 달">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="cal-scroll">
+    <div class="cal-wrap">
+      <div class="cal-weekdays" id="cal-weekdays"></div>
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
   </div>
-</header>
 
-<main>
+  <button class="fab" id="btn-add" aria-label="일정 추가">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+  </button>
+</div>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-eyebrow">Family Trip · East Sea</div>
-    <h1>동해 그리고<br /><span class="accent">삼척의</span> 사흘</h1>
-    <div class="hero-meta">
-      <span><strong>2026.05.01 ▸ 05.03</strong></span>
-      <span>2박 3일</span>
-      <span>라라논골키즈펜션 · 쏠비치 삼척</span>
+<!-- ══ VIEW: Detail ══ -->
+<div id="v-detail" class="view">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="icon-btn" id="btn-back" aria-label="뒤로">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span id="detail-title" class="topbar-title"></span>
+      <button class="icon-btn" id="btn-detail-edit" aria-label="편집">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      </button>
     </div>
-  </section>
+  </header>
+  <div class="detail-scroll">
+    <div id="detail-body" class="detail-wrap"></div>
+  </div>
+</div>
 
-  <!-- DAY 1 -->
-  <section id="day1">
-    <div class="day-marker">
-      <div class="day-num">01</div>
-      <div class="day-meta">
-        <div class="day-label">Day One · 첫째날</div>
-        <div class="day-date">5월 1일 (금)</div>
-        <div class="day-sub">동해 · 묵호 · 어달해변</div>
-      </div>
+<!-- ══ Overlay ══ -->
+<div id="overlay" class="overlay"></div>
+
+<!-- ══ Sheet ══ -->
+<div id="sheet" class="sheet" role="dialog" aria-modal="true">
+  <div class="sheet-handle"></div>
+  <div class="sheet-head">
+    <span id="sheet-title" class="sheet-title"></span>
+    <div class="sheet-head-right">
+      <button class="icon-btn" id="btn-sheet-edit" style="display:none" aria-label="편집">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      </button>
+      <button class="icon-btn" id="btn-sheet-close" aria-label="닫기">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
-
-    <ul class="timeline">
-      <li class="t-item highlight">
-        <div class="t-tag">Stay</div>
-        <h3 class="t-title">라라논골키즈펜션</h3>
-        <p class="t-desc">어달해변에서 차로 약 20분 거리. 첫날 베이스캠프.</p>
-        <div class="t-links">
-          <a class="t-link" href="https://map.naver.com/p/search/라라논골키즈펜션" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-            네이버 지도
-          </a>
-        </div>
-      </li>
-
-      <li class="t-item">
-        <div class="t-tag">Sightseeing</div>
-        <h3 class="t-title">도째비골 스카이밸리</h3>
-        <p class="t-desc">묵호 바다를 내려다보는 전망 명소. 스카이워크와 자이언트 슬라이드.</p>
-        <div class="t-links">
-          <a class="t-link" href="https://map.naver.com/p/search/도째비골스카이밸리" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-            네이버 지도
-          </a>
-        </div>
-      </li>
-
-      <li class="t-item">
-        <div class="t-tag">Sightseeing</div>
-        <h3 class="t-title">논골담길</h3>
-        <p class="t-desc">묵호항 언덕마을의 벽화길. 카페·전망 포인트가 많아 도보 산책 추천.</p>
-        <div class="t-links">
-          <a class="t-link" href="https://map.naver.com/p/search/논골담길" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-            네이버 지도
-          </a>
-        </div>
-      </li>
-
-      <li class="t-item">
-        <div class="t-tag">Meals</div>
-        <div class="meal-group">
-          <p class="meal-group-title">오늘의 식사 & 간식</p>
-          <ul class="meal-list">
-            <li><a href="https://map.naver.com/p/search/거동탕수육" target="_blank" rel="noopener">거동탕수육</a> <small>– 묵호 노포 탕수육</small></li>
-            <li><a href="https://map.naver.com/p/search/사라수산" target="_blank" rel="noopener">사라수산</a> <small>– 회 포장</small></li>
-            <li><a href="https://map.naver.com/p/search/가마솥옛강정" target="_blank" rel="noopener">가마솥 옛강정</a> <small>– 디저트·간식</small></li>
-          </ul>
-        </div>
-      </li>
-    </ul>
-  </section>
-
-  <!-- DAY 2 -->
-  <section id="day2">
-    <div class="day-marker">
-      <div class="day-num">02</div>
-      <div class="day-meta">
-        <div class="day-label">Day Two · 둘째날</div>
-        <div class="day-date">5월 2일 (토)</div>
-        <div class="day-sub">삼척 쏠비치 입성 · 워터파크 데이</div>
-      </div>
-    </div>
-
-    <ul class="timeline">
-      <li class="t-item">
-        <div class="t-tag">Move</div>
-        <h3 class="t-title">펜션 퇴실 → 삼척 이동</h3>
-        <p class="t-desc">짐 정리하고 삼척으로 이동. 워터파크 영업 시작 시간 체크 필수.</p>
-      </li>
-
-      <li class="t-item highlight">
-        <div class="t-tag">Activity</div>
-        <h3 class="t-title">쏠비치 오션플레이 워터파크</h3>
-        <p class="t-desc">메인 액티비티. 점심도 워터파크 내부에서 해결 예정.</p>
-        <div class="t-links">
-          <a class="t-link" href="https://map.naver.com/p/search/쏠비치삼척오션플레이" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-            네이버 지도
-          </a>
-        </div>
-      </li>
-
-      <li class="t-item">
-        <div class="t-tag">Lunch</div>
-        <div class="meal-group">
-          <p class="meal-group-title">점심</p>
-          <ul class="meal-list">
-            <li>오션플레이 내부 식당 <small>– 입장 시 동선·메뉴 확인</small></li>
-          </ul>
-        </div>
-      </li>
-
-      <li class="t-item highlight">
-        <div class="t-tag">Dinner</div>
-        <h3 class="t-title">쏠비치 디너</h3>
-        <p class="t-desc">리조트 내 디너. 예약 필요한 식당이면 미리 예약 확인.</p>
-      </li>
-    </ul>
-  </section>
-
-  <!-- DAY 3 -->
-  <section id="day3">
-    <div class="day-marker">
-      <div class="day-num">03</div>
-      <div class="day-meta">
-        <div class="day-label">Day Three · 셋째날</div>
-        <div class="day-date">5월 3일 (일)</div>
-        <div class="day-sub">쏠비치 산책 · 삼척 맛집 투어</div>
-      </div>
-    </div>
-
-    <ul class="timeline">
-      <li class="t-item">
-        <div class="t-tag">Move</div>
-        <h3 class="t-title">쏠비치 퇴실 후 단지 산책</h3>
-        <p class="t-desc">체크아웃 후 짐을 차에 싣고, 산토리니 풍 단지 둘러보기.</p>
-      </li>
-
-      <li class="t-item">
-        <div class="t-tag">Meals</div>
-        <div class="meal-group">
-          <p class="meal-group-title">점심 & 간식</p>
-          <ul class="meal-list">
-            <li><a href="https://map.naver.com/p/search/부일막국수" target="_blank" rel="noopener">부일막국수</a> <small>– 수육 + 막국수</small></li>
-            <li><a href="https://map.naver.com/p/search/부영닭강정" target="_blank" rel="noopener">부영닭강정</a> <small>– 포장 가능</small></li>
-            <li><a href="https://map.naver.com/p/search/근덕이꽈배기" target="_blank" rel="noopener">근덕이 꽈배기</a> <small>– 차에서 먹기 좋음</small></li>
-          </ul>
-        </div>
-      </li>
-
-      <li class="t-item">
-        <div class="t-tag">Wrap</div>
-        <h3 class="t-title">귀가</h3>
-        <p class="t-desc">길어지는 오후. 출발 시간에 따라 휴게소 한 곳 들렀다 가기.</p>
-      </li>
-    </ul>
-  </section>
-
-  <!-- 준비물 체크리스트 -->
-  <section id="packing" class="checklist-section">
-    <div class="checklist-inner">
-      <div class="day-marker" style="border-color: var(--coral);">
-        <div class="day-num" style="color: var(--coral);">04</div>
-        <div class="day-meta">
-          <div class="day-label" style="color: var(--ocean-deep);">Packing · 준비물</div>
-          <div class="day-date">출발 전 체크</div>
-          <div class="day-sub">탭하면 저장돼요. 다시 와도 그대로 남아요.</div>
-        </div>
-      </div>
-
-      <div class="check-grid">
-        <!-- 짐 -->
-        <div class="check-card">
-          <h3>챙길 짐</h3>
-          <ul class="check-list" data-list="gear">
-            <li><label><input type="checkbox" data-key="g-swimsuit" /><span>수영복 (각자)</span></label></li>
-            <li><label><input type="checkbox" data-key="g-aquashoes" /><span>아쿠아슈즈</span></label></li>
-            <li><label><input type="checkbox" data-key="g-lifejacket" /><span>구명조끼 <em style="font-style:normal;color:var(--coral);font-weight:600;">(어른 것도!)</em></span></label></li>
-            <li><label><input type="checkbox" data-key="g-shower" /><span>샤워용품</span></label></li>
-            <li><label><input type="checkbox" data-key="g-lotion" /><span>로션</span></label></li>
-            <li><label><input type="checkbox" data-key="g-sandtoys" /><span>모래놀이 도구</span></label></li>
-            <li><label><input type="checkbox" data-key="g-clothes" /><span>아이들 여벌 옷</span></label></li>
-            <li><label><input type="checkbox" data-key="g-cup" /><span>서우 물컵</span></label></li>
-          </ul>
-          <form class="check-add" data-add="gear" autocomplete="off">
-            <input type="text" placeholder="항목 추가…" maxlength="40" enterkeyhint="done" aria-label="짐 항목 추가" />
-            <button type="submit" aria-label="추가">+</button>
-          </form>
-          <div class="check-progress">
-            <span data-progress="gear">0 / 8</span>
-            <button class="reset" data-reset="gear">초기화</button>
-          </div>
-        </div>
-
-        <!-- 먹을거리 -->
-        <div class="check-card">
-          <h3>먹을거리</h3>
-          <ul class="check-list" data-list="food">
-            <li><label><input type="checkbox" data-key="f-baby" /><span>이유식</span></label></li>
-            <li><label><input type="checkbox" data-key="f-soup" /><span>사골국</span></label></li>
-            <li><label><input type="checkbox" data-key="f-rice" /><span>햇반</span></label></li>
-            <li><label><input type="checkbox" data-key="f-gim" /><span>김</span></label></li>
-            <li><label><input type="checkbox" data-key="f-egg" /><span>삶은 계란</span></label></li>
-          </ul>
-          <form class="check-add" data-add="food" autocomplete="off">
-            <input type="text" placeholder="항목 추가…" maxlength="40" enterkeyhint="done" aria-label="먹을거리 항목 추가" />
-            <button type="submit" aria-label="추가">+</button>
-          </form>
-          <div class="check-progress">
-            <span data-progress="food">0 / 5</span>
-            <button class="reset" data-reset="food">초기화</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-  <p>made with <span class="heart">♥</span> for our family · 2026</p>
-</footer>
+  </div>
+  <div id="sheet-body" class="sheet-body"></div>
+  <div id="sheet-foot" class="sheet-foot"></div>
+</div>
 
 <script>
-  (function () {
-    const STORAGE_KEY = 'travel-log:donghae-2026-05';
-    const CUSTOM_KEY = '__custom';
+(function () {
+  'use strict';
 
-    function loadState() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-      } catch (e) {
-        return {};
+  /* ─── Storage ─── */
+  const KEY = 'travel-log:v2';
+  function load() { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch { return {}; } }
+  function save(d) { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch {} }
+
+  /* ─── Utils ─── */
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,5); }
+  function pad(n) { return String(n).padStart(2,'0'); }
+  function ymd(y,m,d) { return `${y}-${pad(m+1)}-${pad(d)}`; }
+  function parseYmd(s) { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
+  const DAYS=['일','월','화','수','목','금','토'];
+  const MONTHS=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+  function fmtDate(s) { const d=parseYmd(s); return `${d.getMonth()+1}월 ${d.getDate()}일 (${DAYS[d.getDay()]})`; }
+  function fmtRange(s,e) { return `${fmtDate(s)} — ${fmtDate(e)}`; }
+  function today() { const n=new Date(); return ymd(n.getFullYear(),n.getMonth(),n.getDate()); }
+  function nightsBetween(s,e) {
+    const ms=parseYmd(s), me=parseYmd(e);
+    return Math.round((me-ms)/(1000*60*60*24));
+  }
+
+  /* ─── State ─── */
+  let DB = load();
+  let cy = new Date().getFullYear();
+  let cm = new Date().getMonth();
+  let sheetMode = ''; // 'create'|'view'|'edit'
+  let activeId = null;
+  let prefillDate = null;
+
+  /* ─── DOM refs ─── */
+  const vCal     = document.getElementById('v-cal');
+  const vDetail  = document.getElementById('v-detail');
+  const overlay  = document.getElementById('overlay');
+  const sheet    = document.getElementById('sheet');
+  const sheetTitle    = document.getElementById('sheet-title');
+  const sheetBody     = document.getElementById('sheet-body');
+  const sheetFoot     = document.getElementById('sheet-foot');
+  const btnSheetEdit  = document.getElementById('btn-sheet-edit');
+  const btnSheetClose = document.getElementById('btn-sheet-close');
+  const detailBody    = document.getElementById('detail-body');
+  const detailTitle   = document.getElementById('detail-title');
+
+  /* ─── Calendar ─── */
+  function renderCalendar() {
+    const label = document.getElementById('cal-month-text');
+    label.innerHTML = `<small>${cy}년</small>${MONTHS[cm]}`;
+
+    // weekday headers
+    const wdEl = document.getElementById('cal-weekdays');
+    wdEl.innerHTML = DAYS.map((d,i) =>
+      `<div class="cal-weekday${i===0?' sun':i===6?' sat':''}">${d}</div>`
+    ).join('');
+
+    const grid = document.getElementById('cal-grid');
+    grid.innerHTML = '';
+
+    const todayStr = today();
+    const firstDow = new Date(cy,cm,1).getDay();
+    const daysInMonth = new Date(cy,cm+1,0).getDate();
+    const cells = [];
+    for(let i=0;i<firstDow;i++) cells.push(null);
+    for(let d=1;d<=daysInMonth;d++) cells.push(d);
+    while(cells.length%7!==0) cells.push(null);
+
+    cells.forEach((day,idx) => {
+      const cell = document.createElement('div');
+      if(!day) { cell.className='cal-cell empty'; grid.appendChild(cell); return; }
+
+      const ds = ymd(cy,cm,day);
+      const dow = (firstDow+day-1)%7;
+      const isWkStart = idx%7===0, isWkEnd = idx%7===6;
+
+      // Gather events for this date
+      const evs = getEventsFor(ds);
+      const singleEvs = evs.filter(e=>e.type==='single');
+      const travelEvs = evs.filter(e=>e.type==='travel');
+
+      // Build class list
+      const cls = ['cal-cell'];
+      if(ds===todayStr) cls.push('today');
+      if(dow===0) cls.push('sun');
+      if(dow===6) cls.push('sat');
+      if(isWkStart) cls.push('wk-start');
+      if(isWkEnd)   cls.push('wk-end');
+
+      if(travelEvs.length) {
+        const tr = travelEvs[0];
+        const isStart = ds===tr.startDate;
+        const isEnd   = ds===tr.endDate;
+        if(isStart && isEnd) { cls.push('tr-start','tr-end'); }
+        else if(isStart) cls.push('tr-start');
+        else if(isEnd)   cls.push('tr-end');
+        else             cls.push('tr-mid');
       }
-    }
 
-    function saveState(state) {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      } catch (e) { /* private mode */ }
-    }
+      cell.className = cls.join(' ');
+      cell.dataset.date = ds;
+      cell.innerHTML = `<div class="cal-num">${day}</div>`;
 
-    function getCustom(state, name) {
-      const c = state[CUSTOM_KEY] || {};
-      return Array.isArray(c[name]) ? c[name] : [];
-    }
-    function setCustom(state, name, items) {
-      if (!state[CUSTOM_KEY]) state[CUSTOM_KEY] = {};
-      state[CUSTOM_KEY][name] = items;
-    }
+      if(singleEvs.length||travelEvs.length) {
+        const dots = document.createElement('div');
+        dots.className = 'cal-dots';
+        singleEvs.slice(0,2).forEach(()=>{ dots.innerHTML+=`<div class="cal-dot s"></div>`; });
+        travelEvs.slice(0,1).forEach(()=>{ dots.innerHTML+=`<div class="cal-dot t"></div>`; });
+        cell.appendChild(dots);
+      }
 
-    const state = loadState();
-
-    // 체크박스 토글 핸들러 — 기존/추가 항목 공통
-    function bindCheckbox(cb) {
-      const key = cb.dataset.key;
-      if (state[key]) cb.checked = true;
-      cb.addEventListener('change', () => {
-        state[key] = cb.checked;
-        saveState(state);
-        updateProgress();
-      });
-    }
-
-    // 사용자 추가 항목 렌더
-    function renderCustomItem(listEl, name, item) {
-      const li = document.createElement('li');
-      li.className = 'check-item--custom';
-
-      const label = document.createElement('label');
-      const cb = document.createElement('input');
-      cb.type = 'checkbox';
-      cb.dataset.key = item.key;
-      const span = document.createElement('span');
-      span.textContent = item.label;
-      label.appendChild(cb);
-      label.appendChild(span);
-
-      const remove = document.createElement('button');
-      remove.type = 'button';
-      remove.className = 'check-remove';
-      remove.setAttribute('aria-label', '삭제');
-      remove.textContent = '×';
-      remove.addEventListener('click', () => {
-        const items = getCustom(state, name).filter(it => it.key !== item.key);
-        setCustom(state, name, items);
-        delete state[item.key];
-        saveState(state);
-        li.remove();
-        updateProgress();
-      });
-
-      li.appendChild(label);
-      li.appendChild(remove);
-      listEl.appendChild(li);
-      bindCheckbox(cb);
-    }
-
-    // 기존 체크박스 바인딩
-    document.querySelectorAll('input[type="checkbox"][data-key]').forEach(bindCheckbox);
-
-    // 저장된 사용자 추가 항목 복원
-    document.querySelectorAll('[data-list]').forEach(list => {
-      const name = list.dataset.list;
-      getCustom(state, name).forEach(item => renderCustomItem(list, name, item));
+      cell.addEventListener('click', ()=>onDateClick(ds));
+      grid.appendChild(cell);
     });
+  }
 
-    // 항목 추가 폼
-    document.querySelectorAll('form[data-add]').forEach(form => {
-      const input = form.querySelector('input[type="text"]');
-      const submit = form.querySelector('button[type="submit"]');
-      const sync = () => { submit.disabled = input.value.trim().length === 0; };
-      input.addEventListener('input', sync);
-      sync();
+  function getEventsFor(ds) {
+    return Object.values(DB).filter(e=> ds>=e.startDate && ds<=e.endDate);
+  }
 
-      form.addEventListener('submit', e => {
-        e.preventDefault();
-        const value = input.value.trim();
-        if (!value) return;
-        const name = form.dataset.add;
-        const list = document.querySelector(`[data-list="${name}"]`);
-        const key = `c-${name}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
-        const item = { key, label: value };
-        const items = getCustom(state, name).concat([item]);
-        setCustom(state, name, items);
-        saveState(state);
-        renderCustomItem(list, name, item);
-        input.value = '';
-        sync();
-        updateProgress();
+  function onDateClick(ds) {
+    const evs = getEventsFor(ds);
+    if(!evs.length) { openCreate(ds); }
+    else { openView(evs[0].id); }
+  }
+
+  /* ─── Sheet helpers ─── */
+  function openSheet() {
+    overlay.classList.add('on');
+    sheet.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeSheet() {
+    overlay.classList.remove('on');
+    sheet.classList.remove('open');
+    document.body.style.overflow='';
+    sheetMode=''; activeId=null; prefillDate=null;
+  }
+
+  /* ─── CREATE ─── */
+  function openCreate(ds) {
+    sheetMode='create'; prefillDate=ds||today();
+    sheetTitle.textContent='새 일정';
+    btnSheetEdit.style.display='none';
+    renderCreateBody();
+    renderCreateFoot();
+    openSheet();
+  }
+
+  function renderCreateBody() {
+    const isSingle = !document.querySelector('.type-toggle .on[data-t="range"]');
+    sheetBody.innerHTML = `
+      <div class="fg">
+        <div class="type-toggle">
+          <button class="on" data-t="single">단일 날짜</button>
+          <button data-t="range">기간 날짜</button>
+        </div>
+      </div>
+      <div class="fg" id="fg-dates">
+        <label class="fl">날짜</label>
+        <div class="date-row single">
+          <input class="fi" type="date" id="inp-start" value="${prefillDate}" />
+        </div>
+      </div>
+      <div class="fg" id="fg-content">
+        <label class="fl">내용</label>
+        <textarea class="fta" id="inp-content" placeholder="일정 내용을 입력하세요…" rows="4"></textarea>
+      </div>
+    `;
+    sheetBody.querySelectorAll('.type-toggle button').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        sheetBody.querySelectorAll('.type-toggle button').forEach(b=>b.classList.remove('on'));
+        btn.classList.add('on');
+        const isRange = btn.dataset.t==='range';
+        const datesDiv = document.getElementById('fg-dates');
+        const s = document.getElementById('inp-start').value || prefillDate;
+        datesDiv.querySelector('.date-row').className = isRange ? 'date-row' : 'date-row single';
+        if(isRange) {
+          datesDiv.querySelector('.date-row').innerHTML = `
+            <input class="fi" type="date" id="inp-start" value="${s}" />
+            <input class="fi" type="date" id="inp-end" value="${s}" />
+          `;
+        } else {
+          datesDiv.querySelector('.date-row').innerHTML = `
+            <input class="fi" type="date" id="inp-start" value="${s}" />
+          `;
+        }
       });
     });
+  }
 
-    // 진행률 표시
-    function updateProgress() {
-      document.querySelectorAll('[data-list]').forEach(list => {
-        const name = list.dataset.list;
-        const boxes = list.querySelectorAll('input[type="checkbox"]');
-        const checked = list.querySelectorAll('input[type="checkbox"]:checked').length;
-        const target = document.querySelector(`[data-progress="${name}"]`);
-        if (target) target.textContent = `${checked} / ${boxes.length}`;
-      });
-    }
+  function renderCreateFoot() {
+    sheetFoot.innerHTML='';
+    const cancel = btn('취소','btn btn-s'); cancel.onclick=closeSheet;
+    const save   = btn('저장','btn btn-p'); save.onclick=saveCreate;
+    sheetFoot.append(cancel,save);
+  }
 
-    // 리셋 — 체크 상태만 해제 (사용자 추가 항목 자체는 보존)
-    document.querySelectorAll('[data-reset]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const name = btn.dataset.reset;
-        const list = document.querySelector(`[data-list="${name}"]`);
-        list.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-          cb.checked = false;
-          delete state[cb.dataset.key];
+  function saveCreate() {
+    const startEl = document.getElementById('inp-start');
+    const endEl   = document.getElementById('inp-end');
+    const contentEl = document.getElementById('inp-content');
+    const start = startEl?.value;
+    const end   = endEl?.value || start;
+    const content = contentEl?.value.trim()||'';
+
+    if(!start) { startEl.focus(); return; }
+    if(end && end<start) { alert('종료일이 시작일보다 앞입니다.'); return; }
+
+    const isTravel = end && end!==start;
+    const ev = {
+      id: uid(),
+      type: isTravel?'travel':'single',
+      startDate: start, endDate: end||start,
+      ...(isTravel
+        ? { title:'', accommodation:[], destinations:[], meals:[], packing:[] }
+        : { content })
+    };
+    DB[ev.id]=ev; save(DB);
+    renderCalendar();
+    closeSheet();
+    if(isTravel) setTimeout(()=>openView(ev.id), 100);
+  }
+
+  /* ─── VIEW ─── */
+  function openView(id) {
+    sheetMode='view'; activeId=id;
+    const ev = DB[id]; if(!ev) return;
+    sheetTitle.textContent = ev.type==='travel'
+      ? (ev.title||'여행 일정')
+      : fmtDate(ev.startDate);
+    btnSheetEdit.style.display='flex';
+    renderViewBody(ev);
+    renderViewFoot(ev);
+    openSheet();
+  }
+
+  function renderViewBody(ev) {
+    if(ev.type==='single') {
+      sheetBody.innerHTML=`
+        <div class="view-date-badge single">${fmtDate(ev.startDate)}</div>
+        <div class="view-content">${esc(ev.content)||'<em style="color:var(--ink-mute)">내용 없음</em>'}</div>
+      `;
+    } else {
+      const nights = nightsBetween(ev.startDate,ev.endDate);
+      sheetBody.innerHTML=`
+        <div class="view-date-badge travel">${fmtRange(ev.startDate,ev.endDate)} · ${nights}박 ${nights+1}일</div>
+        ${viewSection('숙소',ev.accommodation)}
+        ${viewSection('여행지',ev.destinations)}
+        ${viewSection('식사',ev.meals)}
+        ${viewCheckSection('준비물',ev.packing,ev.id)}
+      `;
+      // bind packing checkboxes
+      sheetBody.querySelectorAll('.packing-cb').forEach(cb=>{
+        cb.addEventListener('change',()=>{
+          const item = DB[ev.id].packing.find(p=>p.id===cb.dataset.pid);
+          if(item) { item.checked=cb.checked; save(DB); }
         });
-        saveState(state);
-        updateProgress();
       });
+    }
+  }
+
+  function viewSection(label, items) {
+    if(!items||!items.length) return `
+      <div class="view-section">
+        <div class="view-section-title">${label}</div>
+        <div class="view-empty">미입력</div>
+      </div>`;
+    return `
+      <div class="view-section">
+        <div class="view-section-title">${label}</div>
+        <div class="view-list">${items.map(t=>`<div class="view-list-item">${esc(t)}</div>`).join('')}</div>
+      </div>`;
+  }
+
+  function viewCheckSection(label, items, evId) {
+    if(!items||!items.length) return `
+      <div class="view-section">
+        <div class="view-section-title">${label}</div>
+        <div class="view-empty">미입력</div>
+      </div>`;
+    return `
+      <div class="view-section">
+        <div class="view-section-title">${label}</div>
+        ${items.map(p=>`
+          <div class="check-item">
+            <input type="checkbox" class="packing-cb" data-pid="${p.id}" ${p.checked?'checked':''}>
+            <label class="check-item-label">${esc(p.label)}</label>
+          </div>`).join('')}
+      </div>`;
+  }
+
+  function renderViewFoot(ev) {
+    sheetFoot.innerHTML='';
+    const del = btn('삭제','btn btn-d'); del.onclick=()=>deleteEvent(ev.id);
+    if(ev.type==='travel') {
+      const detail = btn('상세 →','btn btn-t'); detail.onclick=()=>{ closeSheet(); openDetail(ev.id); };
+      sheetFoot.append(del, detail);
+    } else {
+      sheetFoot.append(del);
+    }
+  }
+
+  /* ─── EDIT ─── */
+  function openEdit(id) {
+    sheetMode='edit'; activeId=id;
+    const ev = DB[id]; if(!ev) return;
+    sheetTitle.textContent='일정 편집';
+    btnSheetEdit.style.display='none';
+    renderEditBody(ev);
+    renderEditFoot(ev);
+    openSheet();
+  }
+
+  function renderEditBody(ev) {
+    if(ev.type==='single') {
+      sheetBody.innerHTML=`
+        <div class="fg">
+          <label class="fl">날짜</label>
+          <div class="date-row single">
+            <input class="fi" type="date" id="ed-start" value="${ev.startDate}" />
+          </div>
+        </div>
+        <div class="fg">
+          <label class="fl">내용</label>
+          <textarea class="fta" id="ed-content">${esc(ev.content)}</textarea>
+        </div>
+      `;
+    } else {
+      sheetBody.innerHTML=`
+        <div class="fg">
+          <label class="fl">제목</label>
+          <input class="fi" type="text" id="ed-title" placeholder="여행 이름 (선택)" value="${esc(ev.title||'')}" />
+        </div>
+        <div class="fg">
+          <label class="fl">기간</label>
+          <div class="date-row">
+            <input class="fi" type="date" id="ed-start" value="${ev.startDate}" />
+            <input class="fi" type="date" id="ed-end"   value="${ev.endDate}"   />
+          </div>
+        </div>
+        ${editListSection('숙소','accommodation', ev.accommodation)}
+        ${editListSection('여행지','destinations', ev.destinations)}
+        ${editListSection('식사','meals', ev.meals)}
+        ${editCheckSection(ev.packing)}
+      `;
+      bindEditListSections(ev);
+      bindEditCheckSection(ev);
+    }
+  }
+
+  function editListSection(label, key, items) {
+    const listHtml = (items||[]).map(t=>`
+      <div class="list-item" data-key="${key}">
+        <span class="list-item-text">${esc(t)}</span>
+        <button class="list-item-del" data-key="${key}" data-val="${esc(t)}" aria-label="삭제">×</button>
+      </div>`).join('');
+    return `
+      <div class="fg" id="fg-${key}">
+        <label class="fl">${label}</label>
+        <div class="list-items" id="list-${key}">${listHtml}</div>
+        <div class="add-row">
+          <input class="add-input" id="add-${key}" type="text" placeholder="${label} 추가…" />
+          <button class="add-btn" id="addbtn-${key}" disabled>+</button>
+        </div>
+      </div>`;
+  }
+
+  function editCheckSection(items) {
+    const html = (items||[]).map(p=>`
+      <div class="check-item" data-pid="${p.id}">
+        <input type="checkbox" ${p.checked?'checked':''} data-pid="${p.id}">
+        <label class="check-item-label">${esc(p.label)}</label>
+        <button class="check-item-del" data-pid="${p.id}" aria-label="삭제">×</button>
+      </div>`).join('');
+    return `
+      <div class="fg" id="fg-packing">
+        <label class="fl">준비물</label>
+        <div class="check-items" id="list-packing">${html}</div>
+        <div class="add-row">
+          <input class="add-input" id="add-packing" type="text" placeholder="준비물 추가…" />
+          <button class="add-btn" id="addbtn-packing" disabled>+</button>
+        </div>
+      </div>`;
+  }
+
+  function bindEditListSections(ev) {
+    ['accommodation','destinations','meals'].forEach(key=>{
+      const addInput = document.getElementById(`add-${key}`);
+      const addBtn   = document.getElementById(`addbtn-${key}`);
+      const list     = document.getElementById(`list-${key}`);
+
+      addInput.addEventListener('input',()=>{ addBtn.disabled=!addInput.value.trim(); });
+
+      addBtn.addEventListener('click',()=>{
+        const val=addInput.value.trim(); if(!val) return;
+        if(!DB[ev.id][key]) DB[ev.id][key]=[];
+        DB[ev.id][key].push(val); save(DB);
+        const item=document.createElement('div');
+        item.className='list-item'; item.dataset.key=key;
+        item.innerHTML=`<span class="list-item-text">${esc(val)}</span>
+          <button class="list-item-del" data-key="${key}" data-val="${esc(val)}" aria-label="삭제">×</button>`;
+        item.querySelector('button').addEventListener('click',e=>delListItem(e,ev,key));
+        list.appendChild(item); addInput.value=''; addBtn.disabled=true;
+      });
+
+      list.querySelectorAll('.list-item-del').forEach(b=>b.addEventListener('click',e=>delListItem(e,ev,key)));
+    });
+  }
+
+  function delListItem(e, ev, key) {
+    const val=e.currentTarget.dataset.val;
+    DB[ev.id][key]=DB[ev.id][key].filter(v=>esc(v)!==val);
+    save(DB);
+    e.currentTarget.closest('.list-item').remove();
+  }
+
+  function bindEditCheckSection(ev) {
+    const addInput = document.getElementById('add-packing');
+    const addBtn   = document.getElementById('addbtn-packing');
+    const list     = document.getElementById('list-packing');
+
+    addInput.addEventListener('input',()=>{ addBtn.disabled=!addInput.value.trim(); });
+
+    addBtn.addEventListener('click',()=>{
+      const label=addInput.value.trim(); if(!label) return;
+      const p={id:uid(), label, checked:false};
+      if(!DB[ev.id].packing) DB[ev.id].packing=[];
+      DB[ev.id].packing.push(p); save(DB);
+      const item=document.createElement('div');
+      item.className='check-item'; item.dataset.pid=p.id;
+      item.innerHTML=`<input type="checkbox" data-pid="${p.id}">
+        <label class="check-item-label">${esc(p.label)}</label>
+        <button class="check-item-del" data-pid="${p.id}" aria-label="삭제">×</button>`;
+      item.querySelector('input').addEventListener('change',e=>togglePacking(e,ev));
+      item.querySelector('button').addEventListener('click',e=>delPacking(e,ev));
+      list.appendChild(item); addInput.value=''; addBtn.disabled=true;
     });
 
-    updateProgress();
-  })();
-</script>
+    list.querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.addEventListener('change',e=>togglePacking(e,ev)));
+    list.querySelectorAll('.check-item-del').forEach(b=>b.addEventListener('click',e=>delPacking(e,ev)));
+  }
 
+  function togglePacking(e,ev) {
+    const pid=e.currentTarget.dataset.pid;
+    const p=DB[ev.id].packing.find(x=>x.id===pid);
+    if(p) { p.checked=e.currentTarget.checked; save(DB); }
+  }
+
+  function delPacking(e,ev) {
+    const pid=e.currentTarget.dataset.pid;
+    DB[ev.id].packing=DB[ev.id].packing.filter(p=>p.id!==pid);
+    save(DB); e.currentTarget.closest('.check-item').remove();
+  }
+
+  function renderEditFoot(ev) {
+    sheetFoot.innerHTML='';
+    const cancel=btn('취소','btn btn-s'); cancel.onclick=()=>{ closeSheet(); openView(ev.id); };
+    const save_=btn('저장','btn btn-p'); save_.onclick=()=>saveEdit(ev);
+    const btns=[cancel,save_];
+    if(ev.type==='travel') {
+      const detail=btn('상세 →','btn btn-t'); detail.onclick=()=>{ closeSheet(); openDetail(ev.id); };
+      btns.push(detail);
+    }
+    sheetFoot.append(...btns);
+  }
+
+  function saveEdit(ev) {
+    if(ev.type==='single') {
+      const start=document.getElementById('ed-start').value;
+      const content=document.getElementById('ed-content').value.trim();
+      if(!start) return;
+      DB[ev.id].startDate=start; DB[ev.id].endDate=start; DB[ev.id].content=content;
+    } else {
+      const start=document.getElementById('ed-start').value;
+      const end=document.getElementById('ed-end').value;
+      const title=document.getElementById('ed-title').value.trim();
+      if(!start||!end||end<start) { alert('날짜를 확인해 주세요.'); return; }
+      DB[ev.id].startDate=start; DB[ev.id].endDate=end; DB[ev.id].title=title;
+    }
+    save(DB); renderCalendar(); closeSheet(); openView(ev.id);
+  }
+
+  /* ─── Delete ─── */
+  function deleteEvent(id) {
+    if(!confirm('일정을 삭제할까요?')) return;
+    delete DB[id]; save(DB); renderCalendar(); closeSheet();
+  }
+
+  /* ─── Detail page ─── */
+  function openDetail(id) {
+    const ev=DB[id]; if(!ev) return;
+    activeId=id;
+    detailTitle.textContent = ev.title||fmtDate(ev.startDate);
+    renderDetailBody(ev);
+    vCal.classList.add('behind');
+    vDetail.classList.add('active');
+  }
+
+  function closeDetail() {
+    vDetail.classList.remove('active');
+    vCal.classList.remove('behind');
+    activeId=null;
+  }
+
+  function renderDetailBody(ev) {
+    if(ev.type==='single') {
+      detailBody.innerHTML=`
+        <div class="detail-hero">
+          <div class="detail-hero-eyebrow">단일 일정</div>
+          <h2>${fmtDate(ev.startDate)}</h2>
+        </div>
+        <div class="detail-single-content">${esc(ev.content)||'<em style="color:var(--ink-mute)">내용 없음</em>'}</div>
+      `;
+    } else {
+      const nights=nightsBetween(ev.startDate,ev.endDate);
+      detailBody.innerHTML=`
+        <div class="detail-hero">
+          <div class="detail-hero-eyebrow">가족 여행</div>
+          <h2>${esc(ev.title||'여행 일정')}</h2>
+          <div class="detail-hero-meta">
+            <span>${fmtDate(ev.startDate)}</span>
+            <span>→</span>
+            <span>${fmtDate(ev.endDate)}</span>
+            <span>${nights}박 ${nights+1}일</span>
+          </div>
+        </div>
+        ${detailSection('숙소',ev.accommodation)}
+        ${detailSection('여행지',ev.destinations)}
+        ${detailSection('식사',ev.meals)}
+        ${detailCheckSection('준비물',ev.packing,ev.id)}
+      `;
+      // bind packing in detail
+      detailBody.querySelectorAll('.detail-packing-cb').forEach(cb=>{
+        cb.addEventListener('change',()=>{
+          const p=DB[ev.id].packing.find(x=>x.id===cb.dataset.pid);
+          if(p) { p.checked=cb.checked; save(DB); }
+        });
+      });
+    }
+  }
+
+  function detailSection(label,items) {
+    if(!items||!items.length) return `
+      <div class="detail-section">
+        <div class="detail-section-label">${label}</div>
+        <div style="color:var(--ink-mute);font-size:13px;font-style:italic">미입력</div>
+      </div>`;
+    return `
+      <div class="detail-section">
+        <div class="detail-section-label">${label}</div>
+        <div class="detail-items">${items.map(t=>`<div class="detail-item">${esc(t)}</div>`).join('')}</div>
+      </div>`;
+  }
+
+  function detailCheckSection(label,items,evId) {
+    if(!items||!items.length) return `
+      <div class="detail-section">
+        <div class="detail-section-label">${label}</div>
+        <div style="color:var(--ink-mute);font-size:13px;font-style:italic">미입력</div>
+      </div>`;
+    return `
+      <div class="detail-section">
+        <div class="detail-section-label">${label}</div>
+        ${items.map(p=>`
+          <div class="detail-check-item">
+            <input type="checkbox" class="detail-packing-cb" data-pid="${p.id}" ${p.checked?'checked':''}>
+            <label class="detail-check-label">${esc(p.label)}</label>
+          </div>`).join('')}
+      </div>`;
+  }
+
+  /* ─── Misc ─── */
+  function esc(s) {
+    if(!s) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function btn(text,cls) {
+    const b=document.createElement('button');
+    b.className=cls; b.textContent=text; return b;
+  }
+
+  /* ─── Event bindings ─── */
+  document.getElementById('btn-prev').onclick=()=>{ if(--cm<0){cm=11;cy--;} renderCalendar(); };
+  document.getElementById('btn-next').onclick=()=>{ if(++cm>11){cm=0;cy++;} renderCalendar(); };
+  document.getElementById('btn-add').onclick=()=>openCreate(null);
+  overlay.onclick=closeSheet;
+  btnSheetClose.onclick=closeSheet;
+  btnSheetEdit.onclick=()=>{ const ev=DB[activeId]; if(ev){ closeSheet(); openEdit(ev.id); } };
+  document.getElementById('btn-back').onclick=closeDetail;
+  document.getElementById('btn-detail-edit').onclick=()=>{ const id=activeId; closeDetail(); openEdit(id); };
+
+  /* ─── Init ─── */
+  renderCalendar();
+
+})();
+</script>
 
 <script>
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js');
-    });
+    window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); });
   }
 </script>
 </body>
