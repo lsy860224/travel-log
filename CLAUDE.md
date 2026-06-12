@@ -32,14 +32,17 @@
 | 필드 | 단일 일정 (`single`) | 여행 일정 (`travel`) |
 |---|---|---|
 | `type` | `'single'` | `'travel'` |
+| `category` | 카테고리 id (가족·여행·약속·기념일·건강·기타) | 동일 |
 | `startDate` / `endDate` | 같은 날 | 기간 |
 | `content` | 메모 텍스트 | — |
 | `title` | — | 여행 이름 |
 | `accommodation` / `destinations` / `meals` | — | 문자열 배열 |
 | `packing` | — | `{id,label,checked}[]` 체크리스트 |
 
-- **단일 일정** — 달력에 빨간 dot(`--stamp`), 메모 한 덩어리
-- **여행 일정** — 달력에 기간 띠(band) + 파란 dot(`--sea`), 숙소·여행지·식사·준비물 관리
+- **단일 일정** — 달력에 제목 박스(카테고리 색), 메모 한 덩어리
+- **여행 일정** — 달력에 기간만큼 이어지는 제목 박스(카테고리 색), 숙소·여행지·식사·준비물 관리
+- **달력 표시** — 음영 없이 모든 일정을 카테고리 색 + 제목 **얇은 박스**로 레인에 쌓음(셀당 3개, 초과 `+N개`). 같은 일정은 전 기간 동일 레인, 주 경계에서 라벨 반복. 정의: `index.html` 의 `assignLanes`/`evLabel`/`.cal-ev`.
+- **카테고리** — 기본 6종(가족·여행·약속·기념일·건강·기타) **+ 사용자가 직접 추가·수정·삭제** 가능. 진입: 상단바 태그 버튼 → 관리 시트(전체 CRUD), 또는 생성/편집 피커의 "+ 직접 추가". 색은 스와치 + 직접 색상(native color). 저장 `localStorage['travel-log:cats']`, 기본값 `index.html` `DEFAULT_CATS`. 미지정/삭제된 카테고리 일정은 타입별 기본색 폴백.
 
 ---
 
@@ -86,7 +89,7 @@ travel-log/
 - **HTML**: 시맨틱 태그. 뷰는 `.view`, 시트는 `.sheet` 클래스 토글로 전환
 - **CSS**: 단일 `<style>` 블록, `:root` CSS 변수로 토큰 통제, BEM 안 씀
 - **JS**: IIFE로 감싸 전역 오염 방지. 사용자 입력은 `esc()` 로 이스케이프
-- **localStorage 키**: `travel-log:v2` 단일 키. 스키마 변경 시 `v3` 로 bump + 마이그레이션
+- **localStorage 키**: 일정 `travel-log:v2`, 카테고리 `travel-log:cats`. 스키마 변경 시 bump + 마이그레이션
 - **줄바꿈**: LF 고정 (`.gitattributes`). 에디터가 CRLF로 저장하지 않도록 주의
 
 ---
