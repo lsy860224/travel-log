@@ -953,9 +953,10 @@ body {
     return map;
   }
 
-  // 달력 박스에 표시할 라벨 — 여행은 제목, 단일은 내용 첫 줄
+  // 달력 박스에 표시할 라벨 — 제목 우선, 없으면 단일은 메모 첫 줄로 폴백
   function evLabel(e) {
-    if(e.type==='travel') return e.title || '여행';
+    if(e.title) return e.title;
+    if(e.type==='travel') return '여행';
     const line = (e.content||'').split('\n').map(s=>s.trim()).filter(Boolean)[0];
     return line || '메모';
   }
@@ -1034,6 +1035,10 @@ body {
           <button data-t="range">기간 날짜</button>
         </div>
       </div>
+      <div class="fg">
+        <label class="fl">제목</label>
+        <input class="fi" type="text" id="inp-title" placeholder="일정 제목 (달력에 표시)" />
+      </div>
       ${catPickerHtml(null)}
       <div class="fg" id="fg-dates">
         <label class="fl">날짜</label>
@@ -1042,8 +1047,8 @@ body {
         </div>
       </div>
       <div class="fg" id="fg-content">
-        <label class="fl">내용</label>
-        <textarea class="fta" id="inp-content" placeholder="일정 내용을 입력하세요…" rows="4"></textarea>
+        <label class="fl">메모</label>
+        <textarea class="fta" id="inp-content" placeholder="메모 (선택)" rows="3"></textarea>
       </div>
     `;
     sheetBody.querySelectorAll('.type-toggle button').forEach(btn=>{
@@ -1051,6 +1056,7 @@ body {
         sheetBody.querySelectorAll('.type-toggle button').forEach(b=>b.classList.remove('on'));
         btn.classList.add('on');
         const isRange = btn.dataset.t==='range';
+        document.getElementById('fg-content').style.display = isRange ? 'none' : '';
         const datesDiv = document.getElementById('fg-dates');
         const s = document.getElementById('inp-start').value || prefillDate;
         datesDiv.querySelector('.date-row').className = isRange ? 'date-row' : 'date-row single';
@@ -1089,6 +1095,7 @@ body {
     const start = startEl?.value;
     const end   = endEl?.value || start;
     const content = contentEl?.value.trim()||'';
+    const title = document.getElementById('inp-title')?.value.trim()||'';
 
     if(!start) { startEl.focus(); return; }
     if(end && end<start) { alert('종료일이 시작일보다 앞입니다.'); return; }
@@ -1098,9 +1105,10 @@ body {
       id: uid(),
       type: isTravel?'travel':'single',
       category: selectedCat(sheetBody),
+      title: title,
       startDate: start, endDate: end||start,
       ...(isTravel
-        ? { title:'', accommodation:[], destinations:[], meals:[], packing:[] }
+        ? { accommodation:[], destinations:[], meals:[], packing:[] }
         : { content })
     };
     DB[ev.id]=ev; save(DB);
@@ -1115,7 +1123,7 @@ body {
     const ev = DB[id]; if(!ev) return;
     sheetTitle.textContent = ev.type==='travel'
       ? (ev.title||'여행 일정')
-      : fmtDate(ev.startDate);
+      : (ev.title || fmtDate(ev.startDate));
     btnSheetEdit.style.display='flex';
     renderViewBody(ev);
     renderViewFoot(ev);
@@ -1209,6 +1217,10 @@ body {
     if(ev.type==='single') {
       sheetBody.innerHTML=`
         <div class="fg">
+          <label class="fl">제목</label>
+          <input class="fi" type="text" id="ed-title" placeholder="일정 제목 (달력에 표시)" value="${esc(ev.title||'')}" />
+        </div>
+        <div class="fg">
           <label class="fl">날짜</label>
           <div class="date-row single">
             <input class="fi" type="date" id="ed-start" value="${ev.startDate}" />
@@ -1216,7 +1228,7 @@ body {
         </div>
         ${catPickerHtml(ev.category||'family')}
         <div class="fg">
-          <label class="fl">내용</label>
+          <label class="fl">메모</label>
           <textarea class="fta" id="ed-content">${esc(ev.content)}</textarea>
         </div>
       `;
@@ -1368,8 +1380,9 @@ body {
     if(ev.type==='single') {
       const start=document.getElementById('ed-start').value;
       const content=document.getElementById('ed-content').value.trim();
+      const title=document.getElementById('ed-title').value.trim();
       if(!start) return;
-      DB[ev.id].startDate=start; DB[ev.id].endDate=start; DB[ev.id].content=content;
+      DB[ev.id].startDate=start; DB[ev.id].endDate=start; DB[ev.id].content=content; DB[ev.id].title=title;
     } else {
       const start=document.getElementById('ed-start').value;
       const end=document.getElementById('ed-end').value;

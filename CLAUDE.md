@@ -34,8 +34,8 @@
 | `type` | `'single'` | `'travel'` |
 | `category` | 카테고리 id (가족·여행·약속·기념일·건강·기타) | 동일 |
 | `startDate` / `endDate` | 같은 날 | 기간 |
-| `content` | 메모 텍스트 | — |
-| `title` | — | 여행 이름 |
+| `title` | 제목 (달력에 표시) | 제목 (달력에 표시) |
+| `content` | 메모 (선택) | — |
 | `accommodation` / `destinations` / `meals` | — | 문자열 배열 |
 | `packing` | — | `{id,label,checked}[]` 체크리스트 |
 
